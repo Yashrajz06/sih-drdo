@@ -1,0 +1,11 @@
+torch
+torchaudio
+einops
+numpy
+scipy
+soundfile
+librosa
+pesq
+pystoi
+onnxruntime
+sounddevice
