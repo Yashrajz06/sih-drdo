@@ -5,6 +5,7 @@ eventual embedded deployment.
 
 Modes:
   --check                         offline correctness + RTF check, no audio hardware
+  --measure-latency               end-to-end acoustic latency (needs mic + speakers)
   --capture-test SEC --out FILE   mic -> file for SEC seconds, no speaker output
   (default, no flags)             mic -> enhance -> speakers, live, 'e' toggles, 'q' quits
 
@@ -48,7 +49,7 @@ def best_lag(ref: np.ndarray, test: np.ndarray, max_lag: int = 600) -> tuple[int
     return best_lag_val, best_err
 
 
-def causal_reference(mix: np.ndarray) -> np.ndarray:
+def causal_reference(mix: np.ndarray, checkpoint: str = "model_trained_on_dns3.tar") -> np.ndarray:
     """Non-streaming (whole-utterance) GTCRN forward pass, but framed and
     reconstructed with the exact same manual, non-centered analysis/OLA-synthesis
     convention as StreamingEnhancer (torch's istft(center=False) hits an internal
@@ -62,7 +63,7 @@ def causal_reference(mix: np.ndarray) -> np.ndarray:
     from gtcrn import GTCRN
 
     model = GTCRN().eval()
-    ckpt = torch.load(GTCRN_DIR / "checkpoints" / "model_trained_on_dns3.tar", map_location="cpu")
+    ckpt = torch.load(GTCRN_DIR / "checkpoints" / checkpoint, map_location="cpu")
     model.load_state_dict(ckpt["model"])
 
     n_hops = len(mix) // HOP
@@ -88,8 +89,8 @@ def causal_reference(mix: np.ndarray) -> np.ndarray:
     return out_samples
 
 
-def run_streaming(mix: np.ndarray, enabled: bool = True) -> tuple[np.ndarray, float]:
-    enhancer = StreamingEnhancer()
+def run_streaming(mix: np.ndarray, enabled: bool = True, onnx_path=None) -> tuple[np.ndarray, float]:
+    enhancer = StreamingEnhancer(onnx_path) if onnx_path else StreamingEnhancer()
     n_hops = len(mix) // HOP
     out = np.zeros(n_hops * HOP, dtype=np.float32)
     t0 = time.perf_counter()
@@ -101,18 +102,32 @@ def run_streaming(mix: np.ndarray, enabled: bool = True) -> tuple[np.ndarray, fl
     return out, elapsed / audio_duration
 
 
-def cmd_check(_args) -> None:
+def cmd_check(args) -> None:
     mix_path = GTCRN_DIR / "stream" / "test_wavs" / "mix.wav"
     mix, fs = sf.read(mix_path, dtype="float32")
     assert fs == SAMPLE_RATE, f"expected {SAMPLE_RATE} Hz, got {fs}"
 
+    custom = getattr(args, "onnx", None)
     print(f"input: {mix_path} ({len(mix)/SAMPLE_RATE:.2f}s)")
-    print("computing causal batch reference (non-streaming GTCRN, non-centered STFT)...")
-    ref = causal_reference(mix)
-
+    print(f"model: {custom if custom else 'upstream gtcrn_simple.onnx'}")
     print("running streaming ONNX engine hop-by-hop...")
-    streaming_out, rtf = run_streaming(mix, enabled=True)
+    streaming_out, rtf = run_streaming(mix, enabled=True, onnx_path=custom)
 
+    if custom:
+        # The batch reference below is the *pretrained* model, so comparing a
+        # fine-tuned ONNX against it would measure the fine-tuning, not the export.
+        # Correctness of a custom export is checked by scripts/export_onnx.py instead.
+        print(f"\nRTF on this CPU: {rtf:.4f}  ({'real-time capable' if rtf < 1 else 'NOT real-time'})")
+        sf.write("/tmp/streaming_check.wav", streaming_out, SAMPLE_RATE)
+        print("wrote /tmp/streaming_check.wav")
+        print("\nSkipping the batch-reference comparison: it only applies to the pretrained model.")
+        print("Custom exports are verified by: python scripts/export_onnx.py --checkpoint <ckpt>")
+        return
+
+    # The streaming ONNX carries model_trained_on_dns3.tar -- established by
+    # scripts/verify_onnx_provenance.py, not assumed here.
+    print("computing causal batch reference (model_trained_on_dns3.tar)...")
+    ref = causal_reference(mix, checkpoint="model_trained_on_dns3.tar")
     lag, mean_err = best_lag(ref, streaming_out)
     n = min(len(ref) - lag, len(streaming_out) - lag)
     max_err = float(np.abs(ref[:n] - streaming_out[lag : lag + n]).max())
@@ -122,19 +137,151 @@ def cmd_check(_args) -> None:
 
     print()
     print(f"measured algorithmic delay: {lag} samples (~{lag / SAMPLE_RATE * 1000:.1f} ms)")
-    print(f"mean abs error (aligned):   {mean_err:.6f}")
-    print(f"max abs error (aligned):    {max_err:.6f}")
+    print(f"mean abs error vs batch:    {mean_err:.6f}")
+    print(f"max abs error vs batch:     {max_err:.6f}")
     verdict = "real-time capable" if rtf < 1 else "NOT real-time"
     print(f"RTF on this CPU:            {rtf:.4f}  ({verdict})")
     print(f"wrote {out_path}")
 
+    # This residual is NOT float round-off: the ONNX matches upstream's StreamGTCRN to
+    # ~1e-7 (see verify_onnx_provenance.py), so it is a real algorithmic difference
+    # between the streaming reformulation and the batch model -- chiefly the causal
+    # conv caching and the ConvTranspose2d-as-Conv2d rewrite in stream/modules/. Small
+    # enough to be inaudible, but it is a conversion artifact, not numerical noise.
     if max_err > 0.05:
         print(
-            "\nWARNING: error is larger than expected for a numerically-equivalent "
-            "streaming reformulation -- investigate before going live.",
+            f"\nWARNING: max error {max_err:.4f} exceeds the expected streaming-conversion "
+            "residual (~0.03) -- investigate before going live.",
             file=sys.stderr,
         )
         sys.exit(1)
+    print("\nCHECK PASSED: streaming output tracks the batch reference within the expected residual.")
+
+
+def _chirp(duration_s: float = 0.010, f0: float = 1000.0, f1: float = 5000.0) -> np.ndarray:
+    """Short linear chirp. Preferred over a click: its autocorrelation has a much
+    sharper peak, so the delay estimate stays reliable in a noisy room."""
+    t = np.arange(int(SAMPLE_RATE * duration_s)) / SAMPLE_RATE
+    sweep = np.sin(2 * np.pi * (f0 * t + (f1 - f0) / (2 * t[-1]) * t**2))
+    # Taper the edges so the burst doesn't click and smear the correlation peak.
+    return (sweep * np.hanning(len(sweep))).astype(np.float32)
+
+
+def _find_delay(recording: np.ndarray, probe: np.ndarray) -> tuple[int, float]:
+    """Delay of `probe` within `recording`, in samples, by cross-correlation.
+    Also returns a peak-to-sidelobe ratio -- a confidence figure. A low ratio means
+    the peak isn't clearly above the background and the delay shouldn't be trusted."""
+    from scipy.signal import correlate
+
+    corr = np.abs(correlate(recording, probe, mode="valid"))
+    peak = int(np.argmax(corr))
+    guard = len(probe)
+    masked = corr.copy()
+    masked[max(0, peak - guard) : peak + guard] = 0
+    sidelobe = float(masked.max()) if masked.size else 0.0
+    ratio = float(corr[peak]) / sidelobe if sidelobe > 0 else float("inf")
+    return peak, ratio
+
+
+def _selftest_delay_detection() -> bool:
+    """Gate 0.2 prerequisite: prove the detector recovers a KNOWN delay before we
+    trust it on real audio. Without this, a broken estimator would happily report a
+    confident-looking but meaningless latency number."""
+    print("self-test: recovering known synthetic delays (no audio hardware used)...")
+    probe = _chirp()
+    rng = np.random.default_rng(0)
+    ok = True
+    for true_delay in (0, 137, 1024, 7919):
+        signal = rng.standard_normal(SAMPLE_RATE) * 0.01  # room-noise stand-in
+        signal[true_delay : true_delay + len(probe)] += probe * 0.5
+        found, ratio = _find_delay(signal.astype(np.float32), probe)
+        good = abs(found - true_delay) <= 2
+        ok &= good
+        print(f"  true {true_delay:5d} -> found {found:5d}  ({'ok' if good else 'FAIL'}, peak/sidelobe {ratio:.1f})")
+    return ok
+
+
+def cmd_measure_latency(args) -> None:
+    """End-to-end acoustic latency. docs/solution-design.md SS9 is explicit that RTF is
+    a model metric and judges are asking about conversation latency -- this measures
+    the thing they mean.
+
+    Method: play a chirp and record simultaneously, then cross-correlate. The recovered
+    delay covers output buffering -> DAC -> air -> mic -> ADC -> input buffering, i.e.
+    the whole hardware round trip. Our processing adds algorithmic delay (measured at 0
+    samples by --check, since GTCRN is causal with no lookahead) plus per-hop compute.
+    Total one-way conversational latency ~= that round trip + processing.
+    """
+    if not _selftest_delay_detection():
+        print("\nGATE 0.2 FAILED: delay detector cannot recover known delays.", file=sys.stderr)
+        sys.exit(1)
+    print("  self-test passed.\n")
+
+    import sounddevice as sd
+
+    probe = _chirp()
+    pad = int(SAMPLE_RATE * 0.5)
+    playback = np.concatenate([np.zeros(pad, np.float32), probe, np.zeros(pad, np.float32)])
+
+    print(f"playing {len(probe) / SAMPLE_RATE * 1000:.0f} ms chirp and recording simultaneously, "
+          f"{args.latency_trials} trials...")
+    print("keep the room quiet; speakers must be audible to the mic (do NOT use headphones for this test)\n")
+
+    delays_ms = []
+    for trial in range(1, args.latency_trials + 1):
+        rec = sd.playrec(playback, samplerate=SAMPLE_RATE, channels=1, dtype="float32")
+        sd.wait()
+        found, ratio = _find_delay(rec[:, 0], probe)
+        delay_ms = (found - pad) / SAMPLE_RATE * 1000
+        flag = "" if ratio > 3 else "  <-- weak peak, low confidence"
+        print(f"  trial {trial}: {delay_ms:7.1f} ms  (peak/sidelobe {ratio:.1f}){flag}")
+        if ratio > 3:
+            delays_ms.append(delay_ms)
+
+    if not delays_ms:
+        print(
+            "\nGATE 0.2 FAILED: no trial produced a confident peak. The mic likely can't hear "
+            "the speaker -- raise the volume, move the mic closer, or check the output device.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    round_trip = float(np.median(delays_ms))
+    compute_ms = _measure_compute_per_hop()
+    algorithmic_ms = 0.0  # measured by --check: causal, zero lookahead
+    total = round_trip + algorithmic_ms + compute_ms
+
+    print(f"\n=== end-to-end latency ({len(delays_ms)}/{args.latency_trials} confident trials) ===")
+    print(f"hardware round trip (out->air->in): {round_trip:7.1f} ms  (median)")
+    print(f"algorithmic (causal, no lookahead): {algorithmic_ms:7.1f} ms")
+    print(f"model compute per hop:              {compute_ms:7.2f} ms")
+    print(f"TOTAL one-way conversational:       {total:7.1f} ms")
+
+    # ITU-T G.114 (05/2003): 0-150 ms is "acceptable for most user applications".
+    if total < 150:
+        print(f"\nWithin ITU-T G.114's 150 ms transparent band ({total:.0f} ms).")
+    elif total < 400:
+        print(f"\nIn G.114's 150-400 ms band -- acceptable with awareness ({total:.0f} ms).")
+    else:
+        print(f"\nAbove G.114's 400 ms limit ({total:.0f} ms) -- investigate buffering.", file=sys.stderr)
+
+    print(
+        "\nNote: this is laptop hardware. The Pi 5's audio stack will differ, so re-run "
+        "this on the board rather than quoting these numbers for it."
+    )
+
+
+def _measure_compute_per_hop(n_hops: int = 200, onnx_path=None) -> float:
+    """Median wall-clock ms the model needs per hop -- the compute term of the budget."""
+    enhancer = StreamingEnhancer(onnx_path) if onnx_path else StreamingEnhancer()
+    rng = np.random.default_rng(0)
+    times = []
+    for _ in range(n_hops):
+        hop = (rng.standard_normal(HOP) * 0.05).astype(np.float32)
+        t0 = time.perf_counter()
+        enhancer.process_hop(hop, enabled=True)
+        times.append((time.perf_counter() - t0) * 1000)
+    return float(np.median(times))
 
 
 def _load_noise_loop(path: str) -> np.ndarray:
@@ -162,29 +309,61 @@ def _synthetic_pink_noise(seconds: float = 10.0) -> np.ndarray:
 
 
 def cmd_capture_test(args) -> None:
+    """Record from the mic, enhance, and save BOTH the raw and enhanced audio.
+
+    Saving the raw input is the point: an enhanced file on its own proves nothing,
+    because a listener has no idea what the microphone actually heard. The pair is
+    the evidence.
+    """
     import sounddevice as sd
 
-    enhancer = StreamingEnhancer()
-    collected = []
+    enhancer = StreamingEnhancer(args.onnx) if args.onnx else StreamingEnhancer()
+    raw_hops, enhanced_hops = [], []
 
     def cb(indata, _frames, _time_info, status):
         if status:
             print(status, file=sys.stderr)
-        collected.append(enhancer.process_hop(indata[:, 0].copy(), enabled=True))
+        hop = indata[:, 0].copy()
+        raw_hops.append(hop)
+        enhanced_hops.append(enhancer.process_hop(hop, enabled=True))
 
-    print(f"recording {args.capture_test}s from the default input device...")
+    print(f"model: {args.onnx if args.onnx else 'upstream pretrained'}")
+    print(f"\nRecording {args.capture_test:.0f}s. Start your noise source now, then speak.")
+    for n in (3, 2, 1):
+        print(f"  {n}...", flush=True)
+        time.sleep(1)
+    print("  GO -- speak now\n", flush=True)
+
     with sd.InputStream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32", callback=cb):
         sd.sleep(int(args.capture_test * 1000))
+    print("done recording.")
 
-    out = np.concatenate(collected) if collected else np.zeros(0, dtype=np.float32)
-    sf.write(args.out, out, SAMPLE_RATE)
-    print(f"wrote {args.out} ({len(out)/SAMPLE_RATE:.1f}s captured)")
+    if not enhanced_hops:
+        sys.exit("nothing captured -- check the input device with: python -c \"import sounddevice;print(sounddevice.query_devices())\"")
+
+    raw = np.concatenate(raw_hops)
+    enhanced = np.concatenate(enhanced_hops)
+
+    out_enh = Path(args.out)
+    out_raw = out_enh.with_name(out_enh.stem + "_raw" + out_enh.suffix)
+    sf.write(out_raw, raw, SAMPLE_RATE)
+    sf.write(out_enh, enhanced, SAMPLE_RATE)
+
+    level = 20 * np.log10(np.sqrt(np.mean(raw**2)) + 1e-9)
+    print(f"\n  BEFORE (what the mic heard):  {out_raw}")
+    print(f"  AFTER  (enhanced):            {out_enh}")
+    print(f"  {len(raw)/SAMPLE_RATE:.1f}s captured, input level {level:.1f} dBFS")
+    if level < -50:
+        print("  WARNING: input is very quiet -- check the mic is selected and unmuted.", file=sys.stderr)
+    print(f"\nCompare them:\n  aplay {out_raw}\n  aplay {out_enh}")
 
 
 def cmd_live(args) -> None:
     import sounddevice as sd
 
-    enhancer = StreamingEnhancer()
+    enhancer = StreamingEnhancer(args.onnx) if args.onnx else StreamingEnhancer()
+    if args.onnx:
+        print(f"model: {args.onnx}")
     state = {"enabled": True, "running": True, "rtf_samples": [], "last_print": time.time(), "noise_pos": 0}
 
     noise_loop = None
@@ -248,6 +427,17 @@ def cmd_live(args) -> None:
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--check", action="store_true", help="offline correctness + RTF check, no audio hardware")
+    parser.add_argument(
+        "--measure-latency", action="store_true", help="end-to-end acoustic latency (needs mic + speakers)"
+    )
+    parser.add_argument("--latency-trials", type=int, default=5, help="repeat count for --measure-latency")
+    parser.add_argument(
+        "--onnx",
+        type=Path,
+        default=None,
+        help="streaming ONNX model to run (default: the pretrained one bundled upstream). "
+        "Point this at a model produced by scripts/export_onnx.py to demo a fine-tuned model.",
+    )
     parser.add_argument("--capture-test", type=float, metavar="SECONDS", help="mic -> file for SECONDS, no playback")
     parser.add_argument("--out", default="capture_test.wav", help="output wav for --capture-test")
     parser.add_argument("--inject-noise", metavar="FILE", help="loop this wav additively into the mic signal (live mode)")
@@ -257,6 +447,8 @@ def main():
 
     if args.check:
         cmd_check(args)
+    elif args.measure_latency:
+        cmd_measure_latency(args)
     elif args.capture_test:
         cmd_capture_test(args)
     else:

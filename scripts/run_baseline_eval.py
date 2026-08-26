@@ -33,8 +33,14 @@ WINDOW = torch.hann_window(N_FFT).pow(0.5)
 
 
 def load_model(checkpoint_name: str) -> torch.nn.Module:
+    """Accepts either a bare filename in third_party/gtcrn/checkpoints/ or a path to
+    one of our own fine-tuned checkpoints (which also carry optimizer state)."""
+    candidate = Path(checkpoint_name)
+    path = candidate if candidate.exists() else GTCRN_DIR / "checkpoints" / checkpoint_name
+    if not path.exists():
+        raise FileNotFoundError(f"no checkpoint at {path}")
     model = GTCRN().eval()
-    ckpt = torch.load(GTCRN_DIR / "checkpoints" / checkpoint_name, map_location="cpu")
+    ckpt = torch.load(path, map_location="cpu")
     model.load_state_dict(ckpt["model"])
     return model
 

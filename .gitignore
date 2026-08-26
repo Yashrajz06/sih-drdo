@@ -3,7 +3,15 @@ __pycache__/
 *.pyc
 data/
 *.zip
-results.json
+# Regenerable measurement artifacts -- the README carries the reported numbers.
+results*.json
+noise_speech_scores_*.json
+demo_samples/
+listening_check/
 *.wav
 !third_party/gtcrn/**/*.wav
 .claude/
+checkpoints/
+sih_code.zip
+sih-drdo-team-share.zip
+models/
