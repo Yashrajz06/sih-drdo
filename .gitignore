@@ -15,3 +15,6 @@ checkpoints/
 sih_code.zip
 sih-drdo-team-share.zip
 models/
+demo_package/
+demo_variants/
+*.pdf

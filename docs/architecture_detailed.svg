@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1760 990" width="1760" height="990" font-family="Inter, Segoe UI, Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#334155"/></marker>
+    <marker id="at" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#0D9488"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#059669"/></marker>
+  </defs>
+  <rect width="1760" height="990" fill="#FFFFFF"/>
+
+  <text x="48" y="44" font-size="25" font-weight="700" fill="#0F172A">Technical Architecture</text>
+  <text x="48" y="67" font-size="13.5" fill="#64748B">GTCRN speech enhancement · streaming ONNX · Raspberry Pi 5 target</text>
+
+  <!-- ══════════════ BAND 1 · RUNTIME ══════════════ -->
+  <rect x="48" y="92" width="1664" height="380" rx="10" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="2 4"/>
+  <text x="1696" y="462" text-anchor="end" font-size="12.5" font-weight="700" fill="#475569" letter-spacing="0.7">EDGE RUNTIME — Raspberry Pi 5 (8 GB) · ARM Cortex-A76 @ 2.4 GHz · CPU only · no network</text>
+
+  <!-- A · capture -->
+  <rect x="70" y="118" width="252" height="196" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="80" y="136" font-size="11" font-weight="700" fill="#EA8C2B">CAPTURE</text>
+  <rect x="98" y="150" width="64" height="64" rx="12" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5"/>
+  <g transform="translate(118,168)" stroke="#334155" stroke-width="1.7" fill="none" stroke-linecap="round">
+    <path d="M8 2 a4 4 0 0 1 8 0 v8 a4 4 0 0 1-8 0 z M3.5 12 a8.5 8.5 0 0 0 17 0 M12 20.5 v4"/></g>
+  <text x="130" y="231" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0F172A">Mic array</text>
+  <text x="130" y="246" text-anchor="middle" font-size="10" fill="#64748B">primary + ref</text>
+  <rect x="230" y="150" width="64" height="64" rx="12" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5"/>
+  <g transform="translate(248,168)" stroke="#334155" stroke-width="1.6" fill="none" stroke-linejoin="round">
+    <rect x="0" y="4" width="28" height="20" rx="3"/><path d="M6 24 v4 M22 24 v4 M8 12 h12 M8 17 h12"/></g>
+  <text x="262" y="231" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0F172A">USB codec</text>
+  <text x="262" y="246" text-anchor="middle" font-size="10" fill="#64748B">ALSA · 16 kHz</text>
+  <text x="196" y="278" text-anchor="middle" font-size="10.5" fill="#475569">sounddevice / PortAudio</text>
+  <text x="196" y="294" text-anchor="middle" font-size="10.5" fill="#475569">256-sample blocks</text>
+  <line x1="166" y1="182" x2="224" y2="182" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <!-- B · analysis -->
+  <rect x="342" y="118" width="252" height="196" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="352" y="136" font-size="11" font-weight="700" fill="#EA8C2B">ANALYSIS</text>
+  <rect x="370" y="150" width="64" height="64" rx="12" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+  <g transform="translate(388,168)" stroke="#2563EB" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <path d="M14 2 a12 12 0 1 1-11 7"/><path d="M3 3 v6 h6"/></g>
+  <text x="402" y="231" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0F172A">Ring buffer</text>
+  <text x="402" y="246" text-anchor="middle" font-size="10" fill="#64748B">512-sample</text>
+  <rect x="502" y="150" width="64" height="64" rx="12" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+  <g transform="translate(518,170)">
+    <rect x="0" y="9" width="3.6" height="8" rx="1.8" fill="#2563EB"/><rect x="7" y="3" width="3.6" height="20" rx="1.8" fill="#2563EB"/>
+    <rect x="14" y="0" width="3.6" height="26" rx="1.8" fill="#2563EB"/><rect x="21" y="6" width="3.6" height="14" rx="1.8" fill="#2563EB"/>
+    <rect x="28" y="11" width="3.6" height="5" rx="1.8" fill="#2563EB"/></g>
+  <text x="534" y="231" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0F172A">STFT</text>
+  <text x="534" y="246" text-anchor="middle" font-size="10" fill="#64748B">512-pt · sqrt-Hann</text>
+  <text x="468" y="278" text-anchor="middle" font-size="10.5" fill="#475569">32 ms window · 16 ms hop · causal</text>
+  <text x="468" y="294" text-anchor="middle" font-size="10.5" fill="#475569">257 complex bins · zero lookahead</text>
+  <line x1="438" y1="182" x2="496" y2="182" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <!-- C · inference -->
+  <rect x="614" y="118" width="726" height="330" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="624" y="136" font-size="11" font-weight="700" fill="#EA8C2B">INFERENCE — ONNX Runtime 1.29 · CPUExecutionProvider · opset 11 · INT8</text>
+
+  <rect x="634" y="150" width="686" height="128" rx="9" fill="#F0FDFA" stroke="#0D9488" stroke-width="2"/>
+  <text x="648" y="170" font-size="12" font-weight="700" fill="#134E4A">GTCRN — 48,245 params · 33 MMACs/s · causal</text>
+  <g font-size="10.5" font-weight="600" fill="#0F766E" text-anchor="middle">
+    <rect x="648" y="182" width="94" height="38" rx="7" fill="#FFFFFF" stroke="#5EEAD4"/>
+    <text x="695" y="199">ERB</text><text x="695" y="213" font-size="9" font-weight="400" fill="#64748B">sub-band</text>
+    <rect x="752" y="182" width="94" height="38" rx="7" fill="#FFFFFF" stroke="#5EEAD4"/>
+    <text x="799" y="199">SFE</text><text x="799" y="213" font-size="9" font-weight="400" fill="#64748B">feature extr.</text>
+    <rect x="856" y="182" width="106" height="38" rx="7" fill="#FFFFFF" stroke="#5EEAD4"/>
+    <text x="909" y="199">Encoder</text><text x="909" y="213" font-size="9" font-weight="400" fill="#64748B">grouped conv</text>
+    <rect x="972" y="182" width="106" height="38" rx="7" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.6"/>
+    <text x="1025" y="199">DPGRNN ×2</text><text x="1025" y="213" font-size="9" font-weight="400" fill="#64748B">dual-path GRU</text>
+    <rect x="1088" y="182" width="106" height="38" rx="7" fill="#FFFFFF" stroke="#5EEAD4"/>
+    <text x="1141" y="199">Decoder</text><text x="1141" y="213" font-size="9" font-weight="400" fill="#64748B">+ TRA attention</text>
+    <rect x="1204" y="182" width="102" height="38" rx="7" fill="#FFFFFF" stroke="#5EEAD4"/>
+    <text x="1255" y="199">CRM</text><text x="1255" y="213" font-size="9" font-weight="400" fill="#64748B">complex mask</text>
+  </g>
+  <g stroke="#0D9488" stroke-width="1.4" fill="none">
+    <line x1="742" y1="201" x2="748" y2="201" marker-end="url(#at)"/><line x1="846" y1="201" x2="852" y2="201" marker-end="url(#at)"/>
+    <line x1="962" y1="201" x2="968" y2="201" marker-end="url(#at)"/><line x1="1078" y1="201" x2="1084" y2="201" marker-end="url(#at)"/>
+    <line x1="1194" y1="201" x2="1200" y2="201" marker-end="url(#at)"/>
+  </g>
+  <text x="648" y="245" font-size="10.5" fill="#0F766E">Recurrent state carried per frame — fed back every 16 ms:</text>
+  <g font-size="10" fill="#0F766E" text-anchor="middle">
+    <rect x="960" y="232" width="110" height="20" rx="10" fill="#FFFFFF" stroke="#5EEAD4"/><text x="1015" y="246">conv_cache</text>
+    <rect x="1078" y="232" width="104" height="20" rx="10" fill="#FFFFFF" stroke="#5EEAD4"/><text x="1130" y="246">tra_cache</text>
+    <rect x="1190" y="232" width="116" height="20" rx="10" fill="#FFFFFF" stroke="#5EEAD4"/><text x="1248" y="246">inter_cache</text>
+  </g>
+  <path d="M1306 262 C 1330 262, 1330 290, 664 290 C 640 290, 640 268, 646 264" fill="none" stroke="#0D9488" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#at)"/>
+
+  <text x="634" y="322" font-size="10.5" fill="#475569">Model file: gtcrn_defence.onnx — 48K params, ~1 MB, dynamic INT8 quantised, opset 11 (legacy exporter)</text>
+  <text x="634" y="340" font-size="10.5" fill="#475569">Measured on laptop CPU: 1.53 ms per 16 ms hop = RTF 0.095 · 93% headroom</text>
+  <text x="634" y="358" font-size="10.5" fill="#475569">Streaming reformulation: StreamConv2d / StreamConvTranspose2d with causal caches (no full-buffer reprocessing)</text>
+  <line x1="570" y1="182" x2="628" y2="182" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <!-- D · synthesis -->
+  <rect x="1360" y="118" width="196" height="196" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="1370" y="136" font-size="11" font-weight="700" fill="#EA8C2B">SYNTHESIS</text>
+  <rect x="1388" y="150" width="64" height="64" rx="12" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+  <g transform="translate(1402,176)" stroke="#2563EB" stroke-width="1.8" fill="none" stroke-linecap="round">
+    <path d="M0 12 q9 -16 18 0 t18 0"/></g>
+  <text x="1420" y="231" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0F172A">iSTFT</text>
+  <text x="1420" y="246" text-anchor="middle" font-size="10" fill="#64748B">overlap-add</text>
+  <text x="1458" y="278" text-anchor="middle" font-size="10.5" fill="#475569">sqrt-Hann synthesis</text>
+  <text x="1458" y="294" text-anchor="middle" font-size="10.5" fill="#475569">COLA-1 · 50% overlap</text>
+
+  <rect x="1476" y="150" width="64" height="64" rx="12" fill="#0F172A"/>
+  <g transform="translate(1494,170)" stroke="#5EEAD4" stroke-width="1.7" fill="none" stroke-linecap="round">
+    <path d="M2 13 v-3 a11 11 0 0 1 22 0 v3"/>
+    <rect x="0" y="12" width="6" height="11" rx="3" fill="#5EEAD4" stroke="none"/>
+    <rect x="20" y="12" width="6" height="11" rx="3" fill="#5EEAD4" stroke="none"/></g>
+  <text x="1508" y="231" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0F172A">Headset</text>
+  <text x="1508" y="246" text-anchor="middle" font-size="10" fill="#64748B">A/B bypass</text>
+  <line x1="1340" y1="182" x2="1382" y2="182" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+  <line x1="1456" y1="182" x2="1470" y2="182" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <text x="1596" y="182" font-size="10.5" fill="#475569" transform="rotate(90 1596 182)" text-anchor="middle">83.6 ms end-to-end</text>
+
+  <!-- ══════════════ BAND 2 · TRAINING ══════════════ -->
+  <rect x="48" y="502" width="1108" height="436" rx="10" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="2 4"/>
+  <text x="1140" y="928" text-anchor="end" font-size="12.5" font-weight="700" fill="#475569" letter-spacing="0.7">TRAINING — PyTorch 2.13 · Colab T4 GPU · one-time</text>
+
+  <!-- datasets -->
+  <rect x="70" y="528" width="382" height="184" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="80" y="546" font-size="11" font-weight="700" fill="#EA8C2B">CORPORA</text>
+  <g font-size="11" fill="#0F172A">
+    <rect x="90" y="558" width="164" height="30" rx="6" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="102" y="578" font-weight="600">LibriSpeech</text><text x="200" y="578" font-size="9.5" fill="#78350F">2,703 utt</text>
+    <rect x="266" y="558" width="166" height="30" rx="6" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="278" y="578" font-weight="600">MAD</text><text x="330" y="578" font-size="9.5" fill="#78350F">7,466 clips · 7 cls</text>
+    <rect x="90" y="596" width="164" height="30" rx="6" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="102" y="616" font-weight="600">ESC-50</text><text x="180" y="616" font-size="9.5" fill="#78350F">siren · wind</text>
+    <rect x="266" y="596" width="166" height="30" rx="6" fill="#F1F5F9" stroke="#94A3B8"/>
+    <text x="278" y="616" font-weight="600">VCTK-DEMAND</text><text x="392" y="616" font-size="9.5" fill="#475569">held out</text>
+  </g>
+  <text x="90" y="650" font-size="10.5" fill="#475569">CC BY 4.0 / CC0 · ESC-50 is CC BY-NC (flagged)</text>
+  <text x="90" y="668" font-size="10.5" fill="#475569">VCTK never seen in training — evaluation only</text>
+  <text x="90" y="690" font-size="10.5" fill="#475569">MAD test split reserved for evaluation</text>
+
+  <!-- preprocessing -->
+  <rect x="472" y="528" width="330" height="184" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="482" y="546" font-size="11" font-weight="700" fill="#EA8C2B">DATA PIPELINE</text>
+  <rect x="496" y="558" width="64" height="64" rx="12" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.5"/>
+  <g transform="translate(513,575)" stroke="#B45309" stroke-width="1.7" fill="none" stroke-linejoin="round">
+    <path d="M15 0 L29 5 v9c0 7-5.5 12-14 14-8.5-2-14-7-14-14V5z"/><path d="M8 14 l4.5 4.5 L21 10"/></g>
+  <text x="528" y="637" text-anchor="middle" font-size="11" font-weight="600" fill="#0F172A">silero-VAD</text>
+  <text x="528" y="651" text-anchor="middle" font-size="9.5" fill="#78350F">221 clips dropped</text>
+  <rect x="616" y="558" width="64" height="64" rx="12" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.5"/>
+  <g transform="translate(632,578)" stroke="#B45309" stroke-width="1.7" fill="none" stroke-linecap="round">
+    <path d="M0 3 h8 M0 21 h8"/><path d="M8 3 C19 3 19 21 30 21 M8 21 C19 21 19 3 30 3"/></g>
+  <text x="648" y="637" text-anchor="middle" font-size="11" font-weight="600" fill="#0F172A">On-the-fly mix</text>
+  <text x="648" y="651" text-anchor="middle" font-size="9.5" fill="#78350F">SNR -5 to +20 dB</text>
+  <text x="486" y="678" font-size="10.5" fill="#475569">Impulsive oversampled 50% · events placed over voiced speech</text>
+  <text x="486" y="696" font-size="10.5" fill="#475569">Aug: RIR reverb · clipping · band-limit · random gain</text>
+  <line x1="564" y1="590" x2="610" y2="590" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <!-- training core -->
+  <rect x="822" y="528" width="312" height="184" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="832" y="546" font-size="11" font-weight="700" fill="#EA8C2B">OPTIMISATION</text>
+  <text x="836" y="568" font-size="11" font-weight="700" fill="#0F172A">Loss = Hybrid + MR-STFT + Asym</text>
+  <g font-size="10" fill="#475569">
+    <text x="836" y="588">Hybrid — SI-SNR + compressed magnitude + complex</text>
+    <text x="836" y="605">MR-STFT — FFT {512, 1024, 2048}, spectral convergence</text>
+    <text x="836" y="622">Asymmetric — one-sided anti-over-suppression penalty</text>
+  </g>
+  <line x1="836" y1="634" x2="1120" y2="634" stroke="#E2E8F0"/>
+  <g font-size="10" fill="#475569">
+    <text x="836" y="652">AdamW · lr 5e-4 · cosine anneal · grad-clip 5.0</text>
+    <text x="836" y="669">Batch 16 · 4 s segments · per-epoch checkpoint + resume</text>
+    <text x="836" y="686">25 epochs · fine-tuned from pretrained DNS3 weights</text>
+  </g>
+
+  <!-- export -->
+  <rect x="70" y="736" width="1064" height="82" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="80" y="754" font-size="11" font-weight="700" fill="#EA8C2B">EXPORT &amp; OPTIMISE</text>
+  <g font-size="10.5" fill="#0F172A">
+    <rect x="94" y="766" width="188" height="34" rx="7" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="188" y="781" text-anchor="middle" font-weight="600">convert_to_stream</text>
+    <text x="188" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">StreamGTCRN + caches</text>
+    <rect x="302" y="766" width="188" height="34" rx="7" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="396" y="781" text-anchor="middle" font-weight="600">torch.onnx.export</text>
+    <text x="396" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">dynamo=False · opset 11</text>
+    <rect x="510" y="766" width="188" height="34" rx="7" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="604" y="781" text-anchor="middle" font-weight="600">onnxsim</text>
+    <text x="604" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">graph simplification</text>
+    <rect x="718" y="766" width="188" height="34" rx="7" fill="#FFFBEB" stroke="#FBBF24"/>
+    <text x="812" y="781" text-anchor="middle" font-weight="600">quantize_dynamic</text>
+    <text x="812" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">INT8 weights</text>
+    <rect x="926" y="766" width="192" height="34" rx="7" fill="#ECFDF5" stroke="#10B981" stroke-width="1.6"/>
+    <text x="1022" y="781" text-anchor="middle" font-weight="700" fill="#064E3B">gtcrn_defence.onnx</text>
+    <text x="1022" y="794" text-anchor="middle" font-size="9.5" fill="#047857">~1 MB · verified 7e-07</text>
+  </g>
+  <g stroke="#334155" stroke-width="1.5" fill="none">
+    <line x1="286" y1="783" x2="298" y2="783" marker-end="url(#a)"/><line x1="494" y1="783" x2="506" y2="783" marker-end="url(#a)"/>
+    <line x1="702" y1="783" x2="714" y2="783" marker-end="url(#a)"/><line x1="910" y1="783" x2="922" y2="783" marker-end="url(#a)"/>
+  </g>
+  <text x="90" y="840" font-size="10.5" fill="#475569">opset 11 is a hard requirement — the dynamo exporter silently upgrades to opset 18, which benchmarks 3.5× slower and would break real-time on the Pi.</text>
+  <line x1="456" y1="590" x2="466" y2="590" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+  <line x1="806" y1="590" x2="816" y2="590" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <!-- deploy -->
+  <path d="M1118 783 H 1172 V 486 H 977 V 454" fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ag)"/>
+  <rect x="1000" y="475" width="106" height="22" rx="11" fill="#ECFDF5" stroke="#A7F3D0"/>
+  <text x="1053" y="490" text-anchor="middle" font-size="10.5" font-weight="700" fill="#047857">scp to device</text>
+
+  <!-- ══════════════ BAND 3 · EVALUATION ══════════════ -->
+  <rect x="1188" y="502" width="524" height="436" rx="10" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="2 4"/>
+  <text x="1696" y="928" text-anchor="end" font-size="12.5" font-weight="700" fill="#475569" letter-spacing="0.7">EVALUATION HARNESS</text>
+
+  <rect x="1210" y="528" width="480" height="126" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="1220" y="546" font-size="11" font-weight="700" fill="#EA8C2B">METRICS</text>
+  <g font-size="10.5" fill="#475569">
+    <text x="1226" y="570"><tspan font-weight="700" fill="#0F172A">PESQ</tspan>  ITU-T P.862 wideband · pesq 0.0.4</text>
+    <text x="1226" y="590"><tspan font-weight="700" fill="#0F172A">STOI</tspan>  short-time objective intelligibility · pystoi</text>
+    <text x="1226" y="610"><tspan font-weight="700" fill="#0F172A">SI-SNR</tspan>  scale-invariant · time domain</text>
+    <text x="1226" y="634">Streaming output realigned (256-sample lag) before scoring</text>
+  </g>
+
+  <rect x="1210" y="672" width="480" height="112" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="1220" y="690" font-size="11" font-weight="700" fill="#EA8C2B">PROTOCOL</text>
+  <g font-size="10.5" fill="#475569">
+    <text x="1226" y="712">100 trials per cell · paired on identical clean speech</text>
+    <text x="1226" y="732">Stratified: stationary / non-stationary / impulsive</text>
+    <text x="1226" y="752">SNR sweep -5, 0, +5, +10, +15 dB</text>
+    <text x="1226" y="772">Standard error + explicit 2σ significance verdict</text>
+  </g>
+
+  <rect x="1210" y="802" width="480" height="98" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="1220" y="820" font-size="11" font-weight="700" fill="#EA8C2B">BASELINES</text>
+  <g font-size="10.5" fill="#475569">
+    <text x="1226" y="842">Spectral subtraction (Boll 1979) — over-subtraction + floor</text>
+    <text x="1226" y="862">Pretrained GTCRN — un-fine-tuned control</text>
+    <text x="1226" y="882">Published VCTK-DEMAND benchmark — reproduced to 0.02 PESQ</text>
+  </g>
+
+  <path d="M1420 472 V 496" fill="none" stroke="#334155" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#a)"/>
+
+  <!-- footer -->
+  <line x1="48" y1="956" x2="1712" y2="956" stroke="#E2E8F0" stroke-width="1.2"/>
+  <text x="48" y="978" font-size="11" fill="#64748B">Python 3.12 · PyTorch 2.13 · ONNX Runtime 1.29 · onnxsim 0.7.3 · sounddevice / PortAudio · NumPy · SciPy · silero-VAD · pesq · pystoi · torchaudio</text>
+</svg>
