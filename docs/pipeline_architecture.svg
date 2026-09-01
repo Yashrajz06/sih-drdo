@@ -1,0 +1,498 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1740 1606" width="1740" height="1606" font-family="Inter, Segoe UI, Helvetica Neue, Arial, sans-serif">
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#475569"/></marker>
+<marker id="t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0D9488"/></marker>
+<marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#059669"/></marker>
+<marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#94A3B8"/></marker>
+</defs>
+<rect width="1740" height="1606" fill="#FFFFFF"/>
+<text x="56" y="42" font-size="24" font-weight="700" fill="#0F172A">AI-Based Noise Suppression for Defence Communications</text>
+<text x="56" y="64" font-size="13" fill="#64748B">GTCRN speech enhancement  ·  streaming ONNX runtime  ·  Raspberry Pi 5 edge target</text>
+<rect x="1220" y="23" width="476" height="47" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<g transform="translate(1233.0,30.0) scale(0.6250)" fill="none" stroke="#0D9488" stroke-width="3.04" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="1254" y="42" font-size="10.4" fill="#0F172A">Solid colour = built and measured in this system</text>
+<g transform="translate(1233.0,49.0) scale(0.6250)" fill="none" stroke="#94A3B8" stroke-width="3.04" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2.1 2.1M16.9 16.9L19 19M19 5l-2.1 2.1M7.1 16.9L5 19"/></g>
+<text x="1254" y="61" font-size="10.4" fill="#94A3B8">Grey = declared future work, not claimed as done</text>
+<rect x="78" y="144" width="200" height="317" rx="9" fill="#FFF7ED" stroke="#FCD9A8" stroke-width="1.5"/>
+<rect x="78" y="144" width="200" height="4" rx="2" fill="#EA8C2B"/>
+<g transform="translate(92.0,156.0) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13a8 3 0 0 0 16 0v-13"/><path d="M4 12a8 3 0 0 0 16 0"/></g>
+<text x="119" y="169" font-size="12.4" font-weight="700" fill="#0F172A">Audio Sources</text>
+<g transform="translate(92.0,177.0) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M2 14.5h2.5M19.5 14.5H22"/><path d="M12 17v4"/></g>
+<text x="120" y="188.0" font-size="10.3" font-weight="600" fill="#0F172A">Clean speech</text>
+<text x="120" y="200.5" font-size="9.5" fill="#64748B">LibriSpeech dev-clean,</text>
+<text x="120" y="211.8" font-size="9.5" fill="#64748B">2,703 files -- training</text>
+<text x="120" y="223.1" font-size="9.5" fill="#64748B">pool</text>
+<g transform="translate(92.0,229.4) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="120" y="240.4" font-size="10.3" font-weight="600" fill="#0F172A">Held-out evaluation</text>
+<text x="120" y="252.9" font-size="9.5" fill="#64748B">VCTK-DEMAND, 824 pairs --</text>
+<text x="120" y="264.2" font-size="9.5" fill="#64748B">never trained on</text>
+<g transform="translate(92.0,270.5) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h12v11H1z"/><path d="M13 10h4l3.5 3.5V17H13z"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="17" cy="18.5" r="2.2"/></g>
+<text x="120" y="281.5" font-size="10.3" font-weight="600" fill="#0F172A">Stationary noise</text>
+<text x="120" y="294.0" font-size="9.5" fill="#64748B">vehicles, engines</text>
+<g transform="translate(92.0,300.3) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18"/><path d="M12 4v3"/><rect x="7" y="7" width="9" height="7" rx="3"/><path d="M16 10.5h6"/><path d="M21 8v5"/><path d="M9 14v3"/><path d="M5.5 17h8"/></g>
+<text x="120" y="311.3" font-size="10.3" font-weight="600" fill="#0F172A">Non-stationary noise</text>
+<text x="120" y="323.8" font-size="9.5" fill="#64748B">helicopters, fighter jets</text>
+<g transform="translate(92.0,330.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.2 6.3 6.3-2.2-3.9 5.6 3.9 5.6-6.3-2.2L12 21.6l-2.2-6.5-6.3 2.2 3.9-5.6-3.9-5.6 6.3 2.2z"/></g>
+<text x="120" y="341.1" font-size="10.3" font-weight="600" fill="#0F172A">Impulsive noise</text>
+<text x="120" y="353.6" font-size="9.5" fill="#64748B">gunshots, shelling,</text>
+<text x="120" y="364.9" font-size="9.5" fill="#64748B">footsteps</text>
+<g transform="translate(92.0,371.2) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13a8 3 0 0 0 16 0v-13"/><path d="M4 12a8 3 0 0 0 16 0"/></g>
+<text x="120" y="382.2" font-size="10.3" font-weight="600" fill="#0F172A">Noise corpus</text>
+<text x="120" y="394.7" font-size="9.5" fill="#64748B">Military Audio Dataset,</text>
+<text x="120" y="406.0" font-size="9.5" fill="#64748B">7,466 clips, CC BY 4.0</text>
+<g transform="translate(92.0,412.3) scale(0.7917)" fill="none" stroke="#94A3B8" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.7-9 4.7-9-4.7z"/><path d="M3 12.5l9 4.7 9-4.7"/><path d="M3 17.2l9 4.7 9-4.7"/></g>
+<text x="120" y="423.3" font-size="10.3" font-weight="600" fill="#94A3B8">Room impulse responses</text>
+<text x="120" y="435.8" font-size="9.5" fill="#94A3B8">in code, disabled by</text>
+<text x="120" y="447.1" font-size="9.5" fill="#94A3B8">default</text>
+<rect x="296" y="144" width="216" height="310" rx="9" fill="#FFF7ED" stroke="#FCD9A8" stroke-width="1.5"/>
+<rect x="296" y="144" width="216" height="4" rx="2" fill="#EA8C2B"/>
+<g transform="translate(310.0,156.0) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6.5l-4-2.2V13z"/></g>
+<text x="337" y="169" font-size="12.4" font-weight="700" fill="#0F172A">Data Preparation</text>
+<g transform="translate(310.0,177.0) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6.5l-4-2.2V13z"/></g>
+<text x="338" y="188.0" font-size="10.3" font-weight="600" fill="#0F172A">Speech screening</text>
+<text x="338" y="200.5" font-size="9.5" fill="#64748B">silero-VAD removes noise clips</text>
+<text x="338" y="211.8" font-size="9.5" fill="#64748B">containing speech: 221 of</text>
+<text x="338" y="223.1" font-size="9.5" fill="#64748B">5,655 dropped</text>
+<g transform="translate(310.0,229.4) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h4l10 12h4"/><path d="M17 3l4 3-4 3"/><path d="M3 18h4l2.6-3.1"/><path d="M14.4 9.1L17 6"/><path d="M17 15l4 3-4 3"/></g>
+<text x="338" y="240.4" font-size="10.3" font-weight="600" fill="#0F172A">Dynamic on-the-fly mixing</text>
+<text x="338" y="252.9" font-size="9.5" fill="#64748B">randomised SNR from -5 to +20</text>
+<text x="338" y="264.2" font-size="9.5" fill="#64748B">dB, drawn per sample</text>
+<g transform="translate(310.0,270.5) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1.6"/><path d="M6.5 8v3.4M11 8v4.6M15.5 8v3.4"/></g>
+<text x="338" y="281.5" font-size="10.3" font-weight="600" fill="#0F172A">Active-speech level</text>
+<text x="338" y="294.0" font-size="9.5" fill="#64748B">SNR referenced to voiced</text>
+<text x="338" y="305.3" font-size="9.5" fill="#64748B">frames, not whole-clip RMS</text>
+<g transform="translate(310.0,311.6) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.2 6.3 6.3-2.2-3.9 5.6 3.9 5.6-6.3-2.2L12 21.6l-2.2-6.5-6.3 2.2 3.9-5.6-3.9-5.6 6.3 2.2z"/></g>
+<text x="338" y="322.6" font-size="10.3" font-weight="600" fill="#0F172A">Impulsive oversampling</text>
+<text x="338" y="335.1" font-size="9.5" fill="#64748B">about 50% of batches; 0-3</text>
+<text x="338" y="346.4" font-size="9.5" fill="#64748B">transients placed over voiced</text>
+<text x="338" y="357.7" font-size="9.5" fill="#64748B">speech</text>
+<g transform="translate(310.0,364.0) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/><circle cx="9" cy="6" r="2.2" fill="#FFFFFF"/><circle cx="15.5" cy="12" r="2.2" fill="#FFFFFF"/><circle cx="7" cy="18" r="2.2" fill="#FFFFFF"/></g>
+<text x="338" y="375.0" font-size="10.3" font-weight="600" fill="#0F172A">Augmentation</text>
+<text x="338" y="387.5" font-size="9.5" fill="#64748B">gain, clipping, band-limiting</text>
+<text x="338" y="398.8" font-size="9.5" fill="#64748B">(radio channel)</text>
+<g transform="translate(310.0,405.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></g>
+<text x="338" y="416.1" font-size="10.3" font-weight="600" fill="#0F172A">Pair generation</text>
+<text x="338" y="428.6" font-size="9.5" fill="#64748B">16 kHz mono, 4 s segments,</text>
+<text x="338" y="439.9" font-size="9.5" fill="#64748B">float32 noisy/clean tensors</text>
+<rect x="530" y="144" width="660" height="472" rx="9" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.9"/><rect x="530" y="144" width="660" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(544.0,155.0) scale(0.8333)" fill="none" stroke="#0D9488" stroke-width="2.28" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="5" cy="18.5" r="2"/><circle cx="12.5" cy="8.5" r="2"/><circle cx="12.5" cy="15.5" r="2"/><circle cx="20" cy="12" r="2"/><path d="M7 5.5l3.6 2.4M7 12l3.6-2.9M7 12l3.6 2.9M7 18.5l3.6-2.4M14.5 8.9l3.7 2.3M14.5 15.1l3.7-2.3"/></g>
+<text x="572" y="170" font-size="13.2" font-weight="700" fill="#134E4A">Model Training and Fine-Tuning -- GTCRN</text>
+<text x="544" y="186" font-size="9.6" fill="#64748B">Grouped Temporal Convolutional Recurrent Network (ICASSP 2024), fine-tuned on real defence noise</text>
+<rect x="544" y="198" width="310" height="324" rx="9" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5"/>
+<rect x="544" y="198" width="310" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(558.0,210.0) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="585" y="223" font-size="12.4" font-weight="700" fill="#0F172A">Architecture</text>
+<text x="558" y="238" font-size="9.3" fill="#64748B">causal, zero look-ahead</text>
+<g transform="translate(558.0,249.0) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="5" cy="18.5" r="2"/><circle cx="12.5" cy="8.5" r="2"/><circle cx="12.5" cy="15.5" r="2"/><circle cx="20" cy="12" r="2"/><path d="M7 5.5l3.6 2.4M7 12l3.6-2.9M7 12l3.6 2.9M7 18.5l3.6-2.4M14.5 8.9l3.7 2.3M14.5 15.1l3.7-2.3"/></g>
+<text x="586" y="260.0" font-size="10.3" font-weight="600" fill="#0F172A">48,245 parameters</text>
+<text x="586" y="272.5" font-size="9.5" fill="#64748B">23.7K learned weights plus a fixed, non-learned</text>
+<text x="586" y="283.8" font-size="9.5" fill="#64748B">ERB matrix</text>
+<g transform="translate(558.0,290.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2L4 14h6l-1.2 8L20 10h-6.4z"/></g>
+<text x="586" y="301.1" font-size="10.3" font-weight="600" fill="#0F172A">33 MMACs/s</text>
+<text x="586" y="313.6" font-size="9.5" fill="#64748B">compute cost per second of audio</text>
+<g transform="translate(558.0,319.9) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="13" width="3" height="8" rx="1.2"/><rect x="7.5" y="8" width="3" height="13" rx="1.2"/><rect x="12.5" y="3" width="3" height="18" rx="1.2"/><rect x="17.5" y="10" width="3" height="11" rx="1.2"/></g>
+<text x="586" y="330.9" font-size="10.3" font-weight="600" fill="#0F172A">ERB sub-band front end</text>
+<text x="586" y="343.4" font-size="9.5" fill="#64748B">257 FFT bins folded to 64 perceptual bands above</text>
+<text x="586" y="354.7" font-size="9.5" fill="#64748B">bin 65</text>
+<g transform="translate(558.0,361.0) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><rect x="9" y="9" width="6" height="6" fill="#0D9488" stroke="none" opacity="0.35"/></g>
+<text x="586" y="372.0" font-size="10.3" font-weight="600" fill="#0F172A">SFE</text>
+<text x="586" y="384.5" font-size="9.5" fill="#64748B">sub-band feature extraction, kernel-3 neighbour</text>
+<text x="586" y="395.8" font-size="9.5" fill="#64748B">unfold</text>
+<g transform="translate(558.0,402.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.7-9 4.7-9-4.7z"/><path d="M3 12.5l9 4.7 9-4.7"/><path d="M3 17.2l9 4.7 9-4.7"/></g>
+<text x="586" y="413.1" font-size="10.3" font-weight="600" fill="#0F172A">Grouped conv encoder / decoder</text>
+<text x="586" y="425.6" font-size="9.5" fill="#64748B">5 blocks, dilations 1 / 2 / 5, causal left-only</text>
+<text x="586" y="436.9" font-size="9.5" fill="#64748B">padding</text>
+<g transform="translate(558.0,443.2) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5a8 8 0 0 1 13.6-3.6"/><path d="M17.6 3.2v3.9h-3.9"/><path d="M20 13.5a8 8 0 0 1-13.6 3.6"/><path d="M6.4 20.8v-3.9h3.9"/></g>
+<text x="586" y="454.2" font-size="10.3" font-weight="600" fill="#0F172A">2x DPGRNN</text>
+<text x="586" y="466.7" font-size="9.5" fill="#64748B">bidirectional across frequency, unidirectional</text>
+<text x="586" y="478.0" font-size="9.5" fill="#64748B">across time</text>
+<g transform="translate(558.0,484.3) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="#0D9488"/></g>
+<text x="586" y="495.3" font-size="10.3" font-weight="600" fill="#0F172A">TRA</text>
+<text x="586" y="507.8" font-size="9.5" fill="#64748B">temporal recurrent attention</text>
+<rect x="866" y="198" width="310" height="294" rx="9" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5"/>
+<rect x="866" y="198" width="310" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(880.0,210.0) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="#0D9488"/></g>
+<text x="907" y="223" font-size="12.4" font-weight="700" fill="#0F172A">Training objective and recipe</text>
+<text x="880" y="238" font-size="9.3" fill="#64748B">what the model is optimised for</text>
+<g transform="translate(880.0,249.0) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2.5l2-7 3 14 3-18 3 21 2.5-10 1.5 3H22"/></g>
+<text x="908" y="260.0" font-size="10.3" font-weight="600" fill="#0F172A">Hybrid loss</text>
+<text x="908" y="272.5" font-size="9.5" fill="#64748B">SI-SNR + compressed magnitude (power 0.3) +</text>
+<text x="908" y="283.8" font-size="9.5" fill="#64748B">complex real/imag</text>
+<g transform="translate(880.0,290.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="13" width="3" height="8" rx="1.2"/><rect x="7.5" y="8" width="3" height="13" rx="1.2"/><rect x="12.5" y="3" width="3" height="18" rx="1.2"/><rect x="17.5" y="10" width="3" height="11" rx="1.2"/></g>
+<text x="908" y="301.1" font-size="10.3" font-weight="600" fill="#0F172A">Multi-resolution STFT loss</text>
+<text x="908" y="313.6" font-size="9.5" fill="#64748B">FFT 512 / 1024 / 2048; spectral convergence and</text>
+<text x="908" y="324.9" font-size="9.5" fill="#64748B">log-magnitude</text>
+<g transform="translate(880.0,331.2) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8 3v6.2c0 5-3.4 8.9-8 10.8-4.6-1.9-8-5.8-8-10.8V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-4.7"/></g>
+<text x="908" y="342.2" font-size="10.3" font-weight="600" fill="#0F172A">Asymmetric anti-over-suppression</text>
+<text x="908" y="354.7" font-size="9.5" fill="#64748B">weight 0.1; penalises deleting speech harder than</text>
+<text x="908" y="366.0" font-size="9.5" fill="#64748B">residual noise</text>
+<g transform="translate(880.0,372.3) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/><circle cx="9" cy="6" r="2.2" fill="#FFFFFF"/><circle cx="15.5" cy="12" r="2.2" fill="#FFFFFF"/><circle cx="7" cy="18" r="2.2" fill="#FFFFFF"/></g>
+<text x="908" y="383.3" font-size="10.3" font-weight="600" fill="#0F172A">Optimiser</text>
+<text x="908" y="395.8" font-size="9.5" fill="#64748B">AdamW, lr 5e-4, cosine anneal, grad clip 5.0,</text>
+<text x="908" y="407.1" font-size="9.5" fill="#64748B">batch 16</text>
+<g transform="translate(880.0,413.4) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l3.8 2.2"/></g>
+<text x="908" y="424.4" font-size="10.3" font-weight="600" fill="#0F172A">Checkpointing</text>
+<text x="908" y="436.9" font-size="9.5" fill="#64748B">every epoch, resumable -- Colab sessions</text>
+<text x="908" y="448.2" font-size="9.5" fill="#64748B">disconnect</text>
+<g transform="translate(880.0,454.5) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="908" y="465.5" font-size="10.3" font-weight="600" fill="#0F172A">Selection</text>
+<text x="908" y="478.0" font-size="9.5" fill="#64748B">best checkpoint by validation metric</text>
+<rect x="544" y="538" width="632" height="64" rx="8" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.3"/>
+<g transform="translate(556.0,550.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h5"/><path d="M9 12l5-6h6"/><path d="M9 12l5 6h6"/><path d="M17 3l3 3-3 3"/><path d="M17 15l3 3-3 3"/></g>
+<text x="583" y="563" font-size="10.8" font-weight="700" fill="#0F172A">Data split</text>
+<text x="583" y="578" font-size="9.5" fill="#64748B">MAD ships its own training/test CSVs: 5,655 vs 830 usable clips. No test clip is seen in training.</text>
+<text x="583" y="592" font-size="9.5" fill="#64748B">Clean speech 95/5 by sorted path, chapter-contiguous. VCTK-DEMAND held out for the benchmark.</text>
+<rect x="954" y="560" width="183" height="15" rx="3.5" fill="#0D9488"/>
+<rect x="1137" y="560" width="27" height="15" rx="3.5" fill="#94A3B8"/>
+<text x="1046" y="571" text-anchor="middle" font-size="8.8" font-weight="700" fill="#FFFFFF">5,655 TRAIN</text>
+<text x="1151" y="571" text-anchor="middle" font-size="7.6" font-weight="700" fill="#FFFFFF">830</text>
+<rect x="1208" y="144" width="210" height="304" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+<rect x="1208" y="144" width="210" height="4" rx="2" fill="#059669"/>
+<g transform="translate(1222.0,156.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2.1 2.1M16.9 16.9L19 19M19 5l-2.1 2.1M7.1 16.9L5 19"/></g>
+<text x="1249" y="169" font-size="12.4" font-weight="700" fill="#0F172A">Model Optimisation</text>
+<g transform="translate(1222.0,177.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#059669" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#059669" stroke="none"/></g>
+<text x="1250" y="188.0" font-size="10.3" font-weight="600" fill="#0F172A">ONNX export, opset 11</text>
+<text x="1250" y="200.5" font-size="9.5" fill="#64748B">a hard performance</text>
+<text x="1250" y="211.8" font-size="9.5" fill="#64748B">requirement: opset 18 adds</text>
+<text x="1250" y="223.1" font-size="9.5" fill="#64748B">about 30 nodes and runs 3.5x</text>
+<text x="1250" y="234.4" font-size="9.5" fill="#64748B">slower, 5.41 vs 1.53 ms per</text>
+<text x="1250" y="245.7" font-size="9.5" fill="#64748B">hop</text>
+<g transform="translate(1222.0,252.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5a8 8 0 0 1 13.6-3.6"/><path d="M17.6 3.2v3.9h-3.9"/><path d="M20 13.5a8 8 0 0 1-13.6 3.6"/><path d="M6.4 20.8v-3.9h3.9"/></g>
+<text x="1250" y="263.0" font-size="10.3" font-weight="600" fill="#0F172A">Streaming conversion</text>
+<text x="1250" y="275.5" font-size="9.5" fill="#64748B">Conv2d becomes StreamConv2d</text>
+<text x="1250" y="286.8" font-size="9.5" fill="#64748B">with explicit caches, so the</text>
+<text x="1250" y="298.1" font-size="9.5" fill="#64748B">graph runs one 16 ms frame at</text>
+<text x="1250" y="309.4" font-size="9.5" fill="#64748B">a time</text>
+<g transform="translate(1222.0,315.7) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.6L20 18"/><path d="M8.2 16.4L20 6"/></g>
+<text x="1250" y="326.7" font-size="10.3" font-weight="600" fill="#0F172A">Graph optimisation</text>
+<text x="1250" y="339.2" font-size="10.3" font-weight="600" fill="#0F172A">(onnxsim)</text>
+<text x="1250" y="351.7" font-size="9.5" fill="#64748B">constant folding, BatchNorm</text>
+<text x="1250" y="363.0" font-size="9.5" fill="#64748B">fusion</text>
+<g transform="translate(1222.0,369.3) scale(0.7917)" fill="none" stroke="#94A3B8" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/><circle cx="9" cy="6" r="2.2" fill="#FFFFFF"/><circle cx="15.5" cy="12" r="2.2" fill="#FFFFFF"/><circle cx="7" cy="18" r="2.2" fill="#FFFFFF"/></g>
+<text x="1250" y="380.3" font-size="10.3" font-weight="600" fill="#94A3B8">INT8 dynamic quantisation</text>
+<text x="1250" y="392.8" font-size="9.5" fill="#94A3B8">planned; the shipped model is</text>
+<text x="1250" y="404.1" font-size="9.5" fill="#94A3B8">FP32</text>
+<g transform="translate(1222.0,410.4) scale(0.7917)" fill="none" stroke="#94A3B8" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.6L20 18"/><path d="M8.2 16.4L20 6"/></g>
+<text x="1250" y="421.4" font-size="10.3" font-weight="600" fill="#94A3B8">Structured pruning</text>
+<text x="1250" y="433.9" font-size="9.5" fill="#94A3B8">planned; not attempted</text>
+<rect x="1432" y="144" width="202" height="230" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+<rect x="1432" y="144" width="202" height="4" rx="2" fill="#059669"/>
+<g transform="translate(1446.0,156.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 4.8v9.4l-9 4.8-9-4.8V7.3z"/><path d="M3 7.3l9 4.8 9-4.8"/><path d="M12 12.1v9.4"/></g>
+<text x="1473" y="169" font-size="12.4" font-weight="700" fill="#0F172A">Deployable Package</text>
+<g transform="translate(1446.0,177.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 4.8v9.4l-9 4.8-9-4.8V7.3z"/><path d="M3 7.3l9 4.8 9-4.8"/><path d="M12 12.1v9.4"/></g>
+<text x="1474" y="188.0" font-size="10.3" font-weight="600" fill="#0F172A">gtcrn_defence.onnx</text>
+<text x="1474" y="200.5" font-size="9.5" fill="#64748B">562 KB on disk, FP32, opset</text>
+<text x="1474" y="211.8" font-size="9.5" fill="#64748B">11</text>
+<g transform="translate(1446.0,218.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.7-9 4.7-9-4.7z"/><path d="M3 12.5l9 4.7 9-4.7"/><path d="M3 17.2l9 4.7 9-4.7"/></g>
+<text x="1474" y="229.1" font-size="10.3" font-weight="600" fill="#0F172A">Cache tensor spec</text>
+<text x="1474" y="241.6" font-size="9.5" fill="#64748B">conv, TRA and inter-frame</text>
+<text x="1474" y="252.9" font-size="9.5" fill="#64748B">state carried between hops</text>
+<g transform="translate(1446.0,259.2) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="1474" y="270.2" font-size="10.3" font-weight="600" fill="#0F172A">Measured on defence</text>
+<text x="1474" y="282.7" font-size="10.3" font-weight="600" fill="#0F172A">noise</text>
+<text x="1474" y="295.2" font-size="9.5" fill="#64748B">PESQ 2.49 · STOI 0.920 ·</text>
+<text x="1474" y="306.5" font-size="9.5" fill="#64748B">SI-SNR 20.2 dB</text>
+<g transform="translate(1446.0,312.8) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="#059669"/></g>
+<text x="1474" y="323.8" font-size="10.3" font-weight="600" fill="#0F172A">Problem-statement</text>
+<text x="1474" y="336.3" font-size="10.3" font-weight="600" fill="#0F172A">targets</text>
+<text x="1474" y="348.8" font-size="9.5" fill="#64748B">PESQ 2.5 · STOI 0.85 ·</text>
+<text x="1474" y="360.1" font-size="9.5" fill="#64748B">SI-SNR 15 dB</text>
+<line x1="282" y1="262" x2="291" y2="262" stroke="#475569" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="516" y1="262" x2="525" y2="262" stroke="#475569" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="1194" y1="262" x2="1203" y2="262" stroke="#475569" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="1422" y1="262" x2="1427" y2="262" stroke="#475569" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="56" y="112" width="1640" height="544" rx="12" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="2 4"/>
+<rect x="72" y="99" width="505" height="26" rx="13" fill="#FFFFFF"/>
+<circle cx="87" cy="112" r="9.5" fill="#475569"/>
+<text x="87" y="115.7" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">1</text>
+<text x="103" y="116" font-size="12.5" font-weight="700" fill="#475569" letter-spacing="0.5">DEFENCE-AWARE MODEL ENGINEERING AND DATASET  (OFFLINE, ONE-TIME)</text>
+<text x="1678" y="642" text-anchor="end" font-size="10.2" fill="#64748B">Runs once on a Colab T4. Produces a single 562 KB ONNX file -- nothing else in this band ships to the device.</text>
+<rect x="78" y="736.1000000000001" width="178" height="230" rx="9" fill="#FFF7ED" stroke="#FCD9A8" stroke-width="1.5"/>
+<rect x="78" y="736.1000000000001" width="178" height="4" rx="2" fill="#EA8C2B"/>
+<g transform="translate(92.0,748.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2.5l2-7 3 14 3-18 3 21 2.5-10 1.5 3H22"/></g>
+<text x="119" y="761.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Noise Environment</text>
+<text x="92" y="776.1000000000001" font-size="9.3" fill="#64748B">what the mic actually hears</text>
+<g transform="translate(92.0,787.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h12v11H1z"/><path d="M13 10h4l3.5 3.5V17H13z"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="17" cy="18.5" r="2.2"/></g>
+<text x="120" y="798.1" font-size="10.3" font-weight="600" fill="#0F172A">Engine and vehicle</text>
+<text x="120" y="810.6" font-size="10.3" font-weight="600" fill="#0F172A">noise</text>
+<g transform="translate(92.0,818.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18"/><path d="M12 4v3"/><rect x="7" y="7" width="9" height="7" rx="3"/><path d="M16 10.5h6"/><path d="M21 8v5"/><path d="M9 14v3"/><path d="M5.5 17h8"/></g>
+<text x="120" y="829.1" font-size="10.3" font-weight="600" fill="#0F172A">Rotor and jet noise</text>
+<g transform="translate(92.0,844.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11a3 3 0 1 0-3-3"/><path d="M2 12.5h15a3 3 0 1 1-3 3"/><path d="M2 17h8.5a2.4 2.4 0 1 1-2.4 2.4"/></g>
+<text x="120" y="855.1" font-size="10.3" font-weight="600" fill="#0F172A">Wind, HVAC,</text>
+<text x="120" y="867.6" font-size="10.3" font-weight="600" fill="#0F172A">broadband hiss</text>
+<g transform="translate(92.0,875.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12v-5a6 6 0 0 0-12 0z"/><path d="M4 21h16"/><path d="M12 3v3"/><path d="M4 8l2.2 1.6"/><path d="M20 8l-2.2 1.6"/></g>
+<text x="120" y="886.1" font-size="10.3" font-weight="600" fill="#0F172A">Sirens and alarms</text>
+<g transform="translate(92.0,901.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.2 6.3 6.3-2.2-3.9 5.6 3.9 5.6-6.3-2.2L12 21.6l-2.2-6.5-6.3 2.2 3.9-5.6-3.9-5.6 6.3 2.2z"/></g>
+<text x="120" y="912.1" font-size="10.3" font-weight="600" fill="#0F172A">Gunshots, shelling,</text>
+<text x="120" y="924.6" font-size="10.3" font-weight="600" fill="#0F172A">artillery</text>
+<g transform="translate(92.0,932.1) scale(0.7917)" fill="none" stroke="#EA8C2B" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M7 18h11a2 2 0 0 0 2-2V9"/></g>
+<text x="120" y="943.1" font-size="10.3" font-weight="600" fill="#0F172A">Background chatter</text>
+<rect x="267" y="736.1000000000001" width="188" height="205" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+<rect x="267" y="736.1000000000001" width="188" height="4" rx="2" fill="#2563EB"/>
+<g transform="translate(281.0,748.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></g>
+<text x="308" y="761.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Audio Acquisition</text>
+<g transform="translate(281.0,769.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></g>
+<text x="309" y="780.1" font-size="10.3" font-weight="600" fill="#0F172A">Primary microphone</text>
+<text x="309" y="792.6" font-size="9.5" fill="#64748B">single channel; no</text>
+<text x="309" y="803.9" font-size="9.5" fill="#64748B">reference mic required</text>
+<g transform="translate(281.0,810.2) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2.5l2-7 3 14 3-18 3 21 2.5-10 1.5 3H22"/></g>
+<text x="309" y="821.2" font-size="10.3" font-weight="600" fill="#0F172A">Format</text>
+<text x="309" y="833.7" font-size="9.5" fill="#64748B">16 kHz, mono, float32 via</text>
+<text x="309" y="845.0" font-size="9.5" fill="#64748B">sounddevice</text>
+<g transform="translate(281.0,851.3) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6.5 9.5l3.2 2.9-3.2 2.9"/><path d="M12.5 15.3H18"/></g>
+<text x="309" y="862.3" font-size="10.3" font-weight="600" fill="#0F172A">Driver</text>
+<text x="309" y="874.8" font-size="9.5" fill="#64748B">sounddevice / PortAudio,</text>
+<text x="309" y="886.1" font-size="9.5" fill="#64748B">ALSA on the Pi</text>
+<g transform="translate(281.0,892.4) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#2563EB" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#2563EB" stroke="none"/></g>
+<text x="309" y="903.4" font-size="10.3" font-weight="600" fill="#0F172A">Block size</text>
+<text x="309" y="915.9" font-size="9.5" fill="#64748B">256 samples (16 ms) per</text>
+<text x="309" y="927.2" font-size="9.5" fill="#64748B">callback</text>
+<rect x="466" y="736.1000000000001" width="212" height="317" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+<rect x="466" y="736.1000000000001" width="212" height="4" rx="2" fill="#2563EB"/>
+<g transform="translate(480.0,748.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="13" width="3" height="8" rx="1.2"/><rect x="7.5" y="8" width="3" height="13" rx="1.2"/><rect x="12.5" y="3" width="3" height="18" rx="1.2"/><rect x="17.5" y="10" width="3" height="11" rx="1.2"/></g>
+<text x="507" y="761.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Signal Processing</text>
+<text x="480" y="776.1000000000001" font-size="9.3" fill="#64748B">STFT analysis front-end</text>
+<g transform="translate(480.0,787.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5" stroke-dasharray="3.4 2.6"/><path d="M12 3.5v4"/><path d="M15.4 5.1L12 3.5 15.4 1.9"/></g>
+<text x="508" y="798.1" font-size="10.3" font-weight="600" fill="#0F172A">Ring buffer</text>
+<text x="508" y="810.6" font-size="9.5" fill="#64748B">512 samples; each new</text>
+<text x="508" y="821.9" font-size="9.5" fill="#64748B">256-sample hop shifts the</text>
+<text x="508" y="833.2" font-size="9.5" fill="#64748B">window</text>
+<g transform="translate(480.0,839.5) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="13" width="3" height="8" rx="1.2"/><rect x="7.5" y="8" width="3" height="13" rx="1.2"/><rect x="12.5" y="3" width="3" height="18" rx="1.2"/><rect x="17.5" y="10" width="3" height="11" rx="1.2"/></g>
+<text x="508" y="850.5" font-size="10.3" font-weight="600" fill="#0F172A">STFT</text>
+<text x="508" y="863.0" font-size="9.5" fill="#64748B">512-point FFT</text>
+<g transform="translate(480.0,869.3) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18C6.5 18 7 5 12 5s5.5 13 10 13"/><path d="M2 21h20"/></g>
+<text x="508" y="880.3" font-size="10.3" font-weight="600" fill="#0F172A">Window</text>
+<text x="508" y="892.8" font-size="9.5" fill="#64748B">periodic sqrt-Hann; the square</text>
+<text x="508" y="904.1" font-size="9.5" fill="#64748B">root is what lets analysis and</text>
+<text x="508" y="915.4" font-size="9.5" fill="#64748B">synthesis reconstruct exactly</text>
+<g transform="translate(480.0,921.7) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1.6"/><path d="M6.5 8v3.4M11 8v4.6M15.5 8v3.4"/></g>
+<text x="508" y="932.7" font-size="10.3" font-weight="600" fill="#0F172A">Framing</text>
+<text x="508" y="945.2" font-size="9.5" fill="#64748B">32 ms window, 16 ms hop = 50%</text>
+<text x="508" y="956.5" font-size="9.5" fill="#64748B">overlap</text>
+<g transform="translate(480.0,962.8) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><rect x="9" y="9" width="6" height="6" fill="#2563EB" stroke="none" opacity="0.35"/></g>
+<text x="508" y="973.8" font-size="10.3" font-weight="600" fill="#0F172A">Output</text>
+<text x="508" y="986.3" font-size="9.5" fill="#64748B">257 complex bins, 31.25 Hz</text>
+<text x="508" y="997.6" font-size="9.5" fill="#64748B">apart, 62.5 frames per second</text>
+<g transform="translate(480.0,1003.9) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l3.8 2.2"/></g>
+<text x="508" y="1014.9" font-size="10.3" font-weight="600" fill="#0F172A">Causal</text>
+<text x="508" y="1027.4" font-size="9.5" fill="#64748B">zero look-ahead; no future</text>
+<text x="508" y="1038.7" font-size="9.5" fill="#64748B">sample is ever read</text>
+<rect x="1130" y="736.1000000000001" width="186" height="201" rx="9" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1.5"/>
+<rect x="1130" y="736.1000000000001" width="186" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(1144.0,748.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><rect x="9" y="9" width="6" height="6" fill="#0D9488" stroke="none" opacity="0.35"/></g>
+<text x="1171" y="761.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Complex-Domain Mask</text>
+<g transform="translate(1144.0,769.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><rect x="9" y="9" width="6" height="6" fill="#0D9488" stroke="none" opacity="0.35"/></g>
+<text x="1172" y="780.1" font-size="10.3" font-weight="600" fill="#0F172A">Complex ratio mask</text>
+<text x="1172" y="792.6" font-size="10.3" font-weight="600" fill="#0F172A">(CRM)</text>
+<text x="1172" y="805.1" font-size="9.5" fill="#64748B">one complex gain per bin,</text>
+<text x="1172" y="816.4" font-size="9.5" fill="#64748B">applied to real and</text>
+<text x="1172" y="827.7" font-size="9.5" fill="#64748B">imaginary parts together</text>
+<g transform="translate(1144.0,834.0) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2.5l2-7 3 14 3-18 3 21 2.5-10 1.5 3H22"/></g>
+<text x="1172" y="845.0" font-size="10.3" font-weight="600" fill="#0F172A">Magnitude and phase</text>
+<text x="1172" y="857.5" font-size="10.3" font-weight="600" fill="#0F172A">move together</text>
+<text x="1172" y="870.0" font-size="9.5" fill="#64748B">so there is no separate</text>
+<text x="1172" y="881.3" font-size="9.5" fill="#64748B">phase estimation step</text>
+<g transform="translate(1144.0,887.6) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8 3v6.2c0 5-3.4 8.9-8 10.8-4.6-1.9-8-5.8-8-10.8V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-4.7"/></g>
+<text x="1172" y="898.6" font-size="10.3" font-weight="600" fill="#0F172A">It can only attenuate</text>
+<text x="1172" y="911.1" font-size="9.5" fill="#64748B">the mask cannot invent</text>
+<text x="1172" y="922.4" font-size="9.5" fill="#64748B">speech that is not there</text>
+<rect x="1328" y="736.1000000000001" width="158" height="176" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+<rect x="1328" y="736.1000000000001" width="158" height="4" rx="2" fill="#2563EB"/>
+<g transform="translate(1342.0,748.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.7-9 4.7-9-4.7z"/><path d="M3 12.5l9 4.7 9-4.7"/><path d="M3 17.2l9 4.7 9-4.7"/></g>
+<text x="1369" y="761.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Reconstruction</text>
+<g transform="translate(1342.0,769.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="13" width="3" height="8" rx="1.2"/><rect x="7.5" y="8" width="3" height="13" rx="1.2"/><rect x="12.5" y="3" width="3" height="18" rx="1.2"/><rect x="17.5" y="10" width="3" height="11" rx="1.2"/></g>
+<text x="1370" y="780.1" font-size="10.3" font-weight="600" fill="#0F172A">Inverse FFT</text>
+<text x="1370" y="792.6" font-size="9.5" fill="#64748B">back to a</text>
+<text x="1370" y="803.9" font-size="9.5" fill="#64748B">512-sample time</text>
+<text x="1370" y="815.2" font-size="9.5" fill="#64748B">frame</text>
+<g transform="translate(1342.0,821.5) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18C6.5 18 7 5 12 5s5.5 13 10 13"/><path d="M2 21h20"/></g>
+<text x="1370" y="832.5" font-size="10.3" font-weight="600" fill="#0F172A">Synthesis window</text>
+<text x="1370" y="845.0" font-size="9.5" fill="#64748B">sqrt-Hann, 50%</text>
+<text x="1370" y="856.3" font-size="9.5" fill="#64748B">overlap-add</text>
+<g transform="translate(1342.0,862.6) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l3.8 2.2"/></g>
+<text x="1370" y="873.6" font-size="10.3" font-weight="600" fill="#0F172A">Algorithmic lag</text>
+<text x="1370" y="886.1" font-size="9.5" fill="#64748B">a fixed 256</text>
+<text x="1370" y="897.4" font-size="9.5" fill="#64748B">samples, 16 ms</text>
+<rect x="1498" y="736.1000000000001" width="152" height="199" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+<rect x="1498" y="736.1000000000001" width="152" height="4" rx="2" fill="#059669"/>
+<g transform="translate(1512.0,748.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v7H6a2 2 0 0 1-2-2z"/><path d="M20 13h-3v7h1a2 2 0 0 0 2-2z"/></g>
+<text x="1539" y="761.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Output</text>
+<g transform="translate(1512.0,769.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v7H6a2 2 0 0 1-2-2z"/><path d="M20 13h-3v7h1a2 2 0 0 0 2-2z"/></g>
+<text x="1540" y="780.1" font-size="10.3" font-weight="600" fill="#0F172A">Headset or</text>
+<text x="1540" y="792.6" font-size="10.3" font-weight="600" fill="#0F172A">radio</text>
+<g transform="translate(1512.0,800.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M2 14.5h2.5M19.5 14.5H22"/><path d="M12 17v4"/></g>
+<text x="1540" y="811.1" font-size="10.3" font-weight="600" fill="#0F172A">Enhanced</text>
+<text x="1540" y="823.6" font-size="10.3" font-weight="600" fill="#0F172A">speech, 16 kHz</text>
+<g transform="translate(1512.0,831.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2L4 14h6l-1.2 8L20 10h-6.4z"/></g>
+<text x="1540" y="842.1" font-size="10.3" font-weight="600" fill="#0F172A">83.6 ms</text>
+<text x="1540" y="854.6" font-size="10.3" font-weight="600" fill="#0F172A">end-to-end</text>
+<text x="1540" y="867.1" font-size="9.5" fill="#64748B">measured, not</text>
+<text x="1540" y="878.4" font-size="9.5" fill="#64748B">estimated</text>
+<g transform="translate(1512.0,884.7) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="1540" y="895.7" font-size="10.3" font-weight="600" fill="#0F172A">ITU-T G.114</text>
+<text x="1540" y="908.2" font-size="10.3" font-weight="600" fill="#0F172A">budget</text>
+<text x="1540" y="920.7" font-size="9.5" fill="#64748B">150 ms</text>
+<rect x="692" y="736.1000000000001" width="424" height="304" rx="9" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.9"/><rect x="692" y="736.1000000000001" width="424" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(706.0,747.1) scale(0.8333)" fill="none" stroke="#0D9488" stroke-width="2.28" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="734" y="762.1000000000001" font-size="13.2" font-weight="700" fill="#134E4A">Intelligent Enhancement Engine</text>
+<text x="706" y="778.1000000000001" font-size="9.6" fill="#64748B">ONNX Runtime 1.29 · CPUExecutionProvider · opset 11 · FP32 · single thread</text>
+<rect x="704" y="790.1000000000001" width="194" height="214" rx="9" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5"/>
+<rect x="704" y="790.1000000000001" width="194" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(718.0,802.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="5" cy="18.5" r="2"/><circle cx="12.5" cy="8.5" r="2"/><circle cx="12.5" cy="15.5" r="2"/><circle cx="20" cy="12" r="2"/><path d="M7 5.5l3.6 2.4M7 12l3.6-2.9M7 12l3.6 2.9M7 18.5l3.6-2.4M14.5 8.9l3.7 2.3M14.5 15.1l3.7-2.3"/></g>
+<text x="745" y="815.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Causal GTCRN</text>
+<g transform="translate(718.0,823.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="13" width="3" height="8" rx="1.2"/><rect x="7.5" y="8" width="3" height="13" rx="1.2"/><rect x="12.5" y="3" width="3" height="18" rx="1.2"/><rect x="17.5" y="10" width="3" height="11" rx="1.2"/></g>
+<text x="746" y="834.1" font-size="10.3" font-weight="600" fill="#0F172A">ERB sub-band +</text>
+<text x="746" y="846.6" font-size="10.3" font-weight="600" fill="#0F172A">full-band 0-8 kHz</text>
+<g transform="translate(718.0,854.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><rect x="9" y="9" width="6" height="6" fill="#0D9488" stroke="none" opacity="0.35"/></g>
+<text x="746" y="865.1" font-size="10.3" font-weight="600" fill="#0F172A">SFE neighbour unfold</text>
+<g transform="translate(718.0,880.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.7-9 4.7-9-4.7z"/><path d="M3 12.5l9 4.7 9-4.7"/><path d="M3 17.2l9 4.7 9-4.7"/></g>
+<text x="746" y="891.1" font-size="10.3" font-weight="600" fill="#0F172A">Grouped conv encoder /</text>
+<text x="746" y="903.6" font-size="10.3" font-weight="600" fill="#0F172A">decoder</text>
+<g transform="translate(718.0,911.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5a8 8 0 0 1 13.6-3.6"/><path d="M17.6 3.2v3.9h-3.9"/><path d="M20 13.5a8 8 0 0 1-13.6 3.6"/><path d="M6.4 20.8v-3.9h3.9"/></g>
+<text x="746" y="922.1" font-size="10.3" font-weight="600" fill="#0F172A">2x DPGRNN + TRA</text>
+<text x="746" y="934.6" font-size="10.3" font-weight="600" fill="#0F172A">attention</text>
+<g transform="translate(718.0,942.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="746" y="953.1" font-size="10.3" font-weight="600" fill="#0F172A">The same graph that was</text>
+<text x="746" y="965.6" font-size="10.3" font-weight="600" fill="#0F172A">trained</text>
+<text x="746" y="978.1" font-size="9.5" fill="#64748B">nothing is retuned at</text>
+<text x="746" y="989.4" font-size="9.5" fill="#64748B">runtime</text>
+<rect x="910" y="790.1000000000001" width="194" height="183" rx="9" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5"/>
+<rect x="910" y="790.1000000000001" width="194" height="4" rx="2" fill="#0D9488"/>
+<g transform="translate(924.0,802.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.7-9 4.7-9-4.7z"/><path d="M3 12.5l9 4.7 9-4.7"/><path d="M3 17.2l9 4.7 9-4.7"/></g>
+<text x="951" y="815.1000000000001" font-size="12.4" font-weight="700" fill="#0F172A">Streaming state</text>
+<g transform="translate(924.0,823.1) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#0D9488" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#0D9488" stroke="none"/></g>
+<text x="952" y="834.1" font-size="10.3" font-weight="600" fill="#0F172A">conv_cache</text>
+<text x="952" y="846.6" font-size="9.5" fill="#64748B">2 x 1 x 16 x 16 x 33</text>
+<g transform="translate(924.0,852.9) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#0D9488" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#0D9488" stroke="none"/></g>
+<text x="952" y="863.9" font-size="10.3" font-weight="600" fill="#0F172A">tra_cache</text>
+<text x="952" y="876.4" font-size="9.5" fill="#64748B">2 x 3 x 1 x 1 x 16</text>
+<g transform="translate(924.0,882.7) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#0D9488" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#0D9488" stroke="none"/></g>
+<text x="952" y="893.7" font-size="10.3" font-weight="600" fill="#0F172A">inter_cache</text>
+<text x="952" y="906.2" font-size="9.5" fill="#64748B">2 x 1 x 33 x 16</text>
+<g transform="translate(924.0,912.5) scale(0.7917)" fill="none" stroke="#0D9488" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5a8 8 0 0 1 13.6-3.6"/><path d="M17.6 3.2v3.9h-3.9"/><path d="M20 13.5a8 8 0 0 1-13.6 3.6"/><path d="M6.4 20.8v-3.9h3.9"/></g>
+<text x="952" y="923.5" font-size="10.3" font-weight="600" fill="#0F172A">Carried frame to frame</text>
+<text x="952" y="936.0" font-size="9.5" fill="#64748B">this replaces look-ahead</text>
+<text x="952" y="947.3" font-size="9.5" fill="#64748B">and gives the model a</text>
+<text x="952" y="958.6" font-size="9.5" fill="#64748B">memory of past speech</text>
+<text x="706" y="1026" font-size="9.6" fill="#64748B">Runs on every frame regardless of the bypass toggle, so the recurrent state never goes stale.</text>
+<line x1="259" y1="832" x2="262" y2="832" stroke="#0D9488" stroke-width="1.6" marker-end="url(#t)"/>
+<line x1="458" y1="832" x2="461" y2="832" stroke="#0D9488" stroke-width="1.6" marker-end="url(#t)"/>
+<line x1="681" y1="832" x2="687" y2="832" stroke="#0D9488" stroke-width="1.6" marker-end="url(#t)"/>
+<line x1="1119" y1="832" x2="1125" y2="832" stroke="#0D9488" stroke-width="1.6" marker-end="url(#t)"/>
+<line x1="1319" y1="832" x2="1323" y2="832" stroke="#0D9488" stroke-width="1.6" marker-end="url(#t)"/>
+<line x1="1489" y1="832" x2="1493" y2="832" stroke="#0D9488" stroke-width="1.6" marker-end="url(#t)"/>
+<rect x="78" y="1079" width="1596" height="80" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 4"/>
+<g transform="translate(94.0,1089.0) scale(0.7500)" fill="none" stroke="#94A3B8" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></g>
+<text x="120" y="1103" font-size="11.5" font-weight="700" fill="#94A3B8">OPTIONAL ADAPTIVE NOISE CANCELLATION BRANCH -- NOT IMPLEMENTED</text>
+<text x="120" y="1118" font-size="9.6" fill="#94A3B8">Needs a second, reference microphone. Scoped as future work; the shipped system is single-microphone.</text>
+<rect x="112" y="1127" width="186" height="24" rx="6" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<g transform="translate(121.0,1131.0) scale(0.6250)" fill="none" stroke="#94A3B8" stroke-width="2.72" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></g>
+<text x="142" y="1143" font-size="9.8" fill="#94A3B8">Reference mic</text>
+<line x1="302" y1="1139" x2="336" y2="1139" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#p)"/>
+<rect x="340" y="1127" width="186" height="24" rx="6" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<g transform="translate(349.0,1131.0) scale(0.6250)" fill="none" stroke="#94A3B8" stroke-width="2.72" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6.5l-4-2.2V13z"/></g>
+<text x="370" y="1143" font-size="9.8" fill="#94A3B8">VAD speech gate</text>
+<line x1="530" y1="1139" x2="564" y2="1139" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#p)"/>
+<rect x="568" y="1127" width="186" height="24" rx="6" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<g transform="translate(577.0,1131.0) scale(0.6250)" fill="none" stroke="#94A3B8" stroke-width="2.72" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/><circle cx="9" cy="6" r="2.2" fill="#FFFFFF"/><circle cx="15.5" cy="12" r="2.2" fill="#FFFFFF"/><circle cx="7" cy="18" r="2.2" fill="#FFFFFF"/></g>
+<text x="598" y="1143" font-size="9.8" fill="#94A3B8">NLMS adaptive filter</text>
+<line x1="758" y1="1139" x2="792" y2="1139" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#p)"/>
+<rect x="796" y="1127" width="186" height="24" rx="6" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<g transform="translate(805.0,1131.0) scale(0.6250)" fill="none" stroke="#94A3B8" stroke-width="2.72" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2.5l2-7 3 14 3-18 3 21 2.5-10 1.5 3H22"/></g>
+<text x="826" y="1143" font-size="9.8" fill="#94A3B8">Correlated noise estimate</text>
+<path d="M 880 1123 V 1047" fill="none" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#p)"/>
+<rect x="56" y="704.1000000000001" width="1640" height="495" rx="12" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="2 4"/>
+<rect x="72" y="691.1000000000001" width="569" height="26" rx="13" fill="#FFFFFF"/>
+<circle cx="87" cy="704.1000000000001" r="9.5" fill="#475569"/>
+<text x="87" y="707.8000000000002" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">2</text>
+<text x="103" y="708.1000000000001" font-size="12.5" font-weight="700" fill="#475569" letter-spacing="0.5">REAL-TIME SPEECH ENHANCEMENT  (ONLINE RUNTIME, ONE 16 ms FRAME AT A TIME)</text>
+<text x="1678" y="1185" text-anchor="end" font-size="10.2" fill="#64748B">Pure streaming: no look-ahead and no buffering beyond a single frame. Measured 83.6 ms end-to-end, mic to ear.</text>
+<rect x="78" y="1279.0" width="262" height="235" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+<rect x="78" y="1279.0" width="262" height="4" rx="2" fill="#059669"/>
+<g transform="translate(92.0,1291.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></g>
+<text x="119" y="1304.0" font-size="12.4" font-weight="700" fill="#0F172A">Deployment Flow</text>
+<g transform="translate(92.0,1312.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 4.8v9.4l-9 4.8-9-4.8V7.3z"/><path d="M3 7.3l9 4.8 9-4.8"/><path d="M12 12.1v9.4"/></g>
+<text x="120" y="1323.0" font-size="10.3" font-weight="600" fill="#0F172A">1. Optimised ONNX model</text>
+<text x="120" y="1335.5" font-size="9.5" fill="#64748B">built once in Band 1</text>
+<g transform="translate(92.0,1341.8) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></g>
+<text x="120" y="1352.8" font-size="10.3" font-weight="600" fill="#0F172A">2. Copy to device</text>
+<text x="120" y="1365.3" font-size="9.5" fill="#64748B">one 562 KB file; PyTorch is never</text>
+<text x="120" y="1376.6" font-size="9.5" fill="#64748B">installed on the board</text>
+<g transform="translate(92.0,1382.9) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6.5 9.5l3.2 2.9-3.2 2.9"/><path d="M12.5 15.3H18"/></g>
+<text x="120" y="1393.9" font-size="10.3" font-weight="600" fill="#0F172A">3. scripts/setup_pi.sh</text>
+<text x="120" y="1406.4" font-size="9.5" fill="#64748B">venv, ALSA device check, dependencies,</text>
+<text x="120" y="1417.7" font-size="9.5" fill="#64748B">throttle check</text>
+<g transform="translate(92.0,1424.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1.6"/><path d="M6.5 8v3.4M11 8v4.6M15.5 8v3.4"/></g>
+<text x="120" y="1435.0" font-size="10.3" font-weight="600" fill="#0F172A">4. Benchmark</text>
+<text x="120" y="1447.5" font-size="9.5" fill="#64748B">per-hop latency and real-time factor,</text>
+<text x="120" y="1458.8" font-size="9.5" fill="#64748B">measured on the board</text>
+<g transform="translate(92.0,1465.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v7H6a2 2 0 0 1-2-2z"/><path d="M20 13h-3v7h1a2 2 0 0 0 2-2z"/></g>
+<text x="120" y="1476.1" font-size="10.3" font-weight="600" fill="#0F172A">5. scripts/live_demo.py</text>
+<text x="120" y="1488.6" font-size="9.5" fill="#64748B">mic to headset, with a live enhancement</text>
+<text x="120" y="1499.9" font-size="9.5" fill="#64748B">on/off toggle</text>
+<rect x="358" y="1279.0" width="660" height="213" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+<rect x="358" y="1279.0" width="660" height="4" rx="2" fill="#2563EB"/>
+<g transform="translate(372.0,1291.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2L4 14h6l-1.2 8L20 10h-6.4z"/></g>
+<text x="399" y="1304.0" font-size="12.4" font-weight="700" fill="#0F172A">Why the processing runs on the edge</text>
+<g transform="translate(372.0,1312.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2L4 14h6l-1.2 8L20 10h-6.4z"/></g>
+<text x="400" y="1323.0" font-size="10.3" font-weight="600" fill="#0F172A">Latency</text>
+<text x="400" y="1335.5" font-size="9.5" fill="#64748B">83.6 ms measured end-to-end with a chirp and cross-correlation, not estimated. ITU-T G.114 treats anything under 150</text>
+<text x="400" y="1346.8" font-size="9.5" fill="#64748B">ms as transparent to a talker.</text>
+<g transform="translate(372.0,1353.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h9.5a4 4 0 0 0 .8-7.9A6 6 0 0 0 7.6 7.6"/><path d="M6.5 10A4 4 0 0 0 7 18"/><path d="M3 3l18 18"/></g>
+<text x="400" y="1364.1" font-size="10.3" font-weight="600" fill="#0F172A">Connectivity independence</text>
+<text x="400" y="1376.6" font-size="9.5" fill="#64748B">a field radio cannot assume a network link, and a cloud round trip would exhaust the latency budget on its own.</text>
+<g transform="translate(372.0,1382.9) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8 3v6.2c0 5-3.4 8.9-8 10.8-4.6-1.9-8-5.8-8-10.8V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-4.7"/></g>
+<text x="400" y="1393.9" font-size="10.3" font-weight="600" fill="#0F172A">Privacy and security</text>
+<text x="400" y="1406.4" font-size="9.5" fill="#64748B">operational audio never leaves the device.</text>
+<g transform="translate(372.0,1412.7) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l3.8 2.2"/></g>
+<text x="400" y="1423.7" font-size="10.3" font-weight="600" fill="#0F172A">Real-time factor 0.095</text>
+<text x="400" y="1436.2" font-size="9.5" fill="#64748B">the model uses under a tenth of the time budget it is given, which leaves headroom for a slower board.</text>
+<g transform="translate(372.0,1442.5) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 4.8v9.4l-9 4.8-9-4.8V7.3z"/><path d="M3 7.3l9 4.8 9-4.8"/><path d="M12 12.1v9.4"/></g>
+<text x="400" y="1453.5" font-size="10.3" font-weight="600" fill="#0F172A">Footprint</text>
+<text x="400" y="1466.0" font-size="9.5" fill="#64748B">48,245 parameters, 562 KB. Small enough that ONNX Runtime threading buys nothing: 0.72 / 0.75 / 0.78 ms for 1 / 2 / 4</text>
+<text x="400" y="1477.3" font-size="9.5" fill="#64748B">threads.</text>
+<rect x="1036" y="1279.0" width="250" height="179" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+<rect x="1036" y="1279.0" width="250" height="4" rx="2" fill="#059669"/>
+<g transform="translate(1050.0,1291.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.6" cy="14.4" r="3.3"/><circle cx="15.4" cy="14.4" r="3.3"/><circle cx="12" cy="18.6" r="3.3"/><path d="M12 10.4C10.6 7.2 8 6.4 6.2 7.6"/><path d="M12 10.4c1.4-3.2 4-4 5.8-2.8"/></g>
+<text x="1077" y="1304.0" font-size="12.4" font-weight="700" fill="#0F172A">Edge Hardware Target</text>
+<g transform="translate(1050.0,1312.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.6" cy="14.4" r="3.3"/><circle cx="15.4" cy="14.4" r="3.3"/><circle cx="12" cy="18.6" r="3.3"/><path d="M12 10.4C10.6 7.2 8 6.4 6.2 7.6"/><path d="M12 10.4c1.4-3.2 4-4 5.8-2.8"/></g>
+<text x="1078" y="1323.0" font-size="10.3" font-weight="600" fill="#0F172A">Raspberry Pi 5, 8 GB</text>
+<g transform="translate(1050.0,1338.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="1078" y="1349.0" font-size="10.3" font-weight="600" fill="#0F172A">Broadcom BCM2712</text>
+<text x="1078" y="1361.5" font-size="9.5" fill="#64748B">quad-core ARM Cortex-A76 at 2.4 GHz,</text>
+<text x="1078" y="1372.8" font-size="9.5" fill="#64748B">CPU inference only</text>
+<g transform="translate(1050.0,1379.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#059669" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#059669" stroke="none"/></g>
+<text x="1078" y="1390.1" font-size="10.3" font-weight="600" fill="#0F172A">ONNX Runtime</text>
+<text x="1078" y="1402.6" font-size="9.5" fill="#64748B">CPUExecutionProvider, no accelerator</text>
+<text x="1078" y="1413.9" font-size="9.5" fill="#64748B">required</text>
+<g transform="translate(1050.0,1420.2) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V3"/><path d="M12 3l-2.4 3.6h4.8z" fill="#059669"/><path d="M12 13.5l4-3.6"/><circle cx="16.6" cy="9.2" r="1.7" fill="#059669"/><path d="M12 17.2l-4-3.8"/><rect x="6.2" y="11.4" width="3.6" height="3.6" rx="0.8" fill="#059669"/></g>
+<text x="1078" y="1431.2" font-size="10.3" font-weight="600" fill="#0F172A">USB audio codec</text>
+<text x="1078" y="1443.7" font-size="9.5" fill="#64748B">the Pi 5 has no 3.5 mm jack</text>
+<rect x="1306" y="1279.0" width="328" height="164" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+<rect x="1306" y="1279.0" width="328" height="4" rx="2" fill="#2563EB"/>
+<g transform="translate(1320.0,1291.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="1347" y="1304.0" font-size="12.4" font-weight="700" fill="#0F172A">Verification on Target</text>
+<g transform="translate(1320.0,1312.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1.6"/><path d="M6.5 8v3.4M11 8v4.6M15.5 8v3.4"/></g>
+<text x="1348" y="1323.0" font-size="10.3" font-weight="600" fill="#0F172A">setup_pi.sh benchmark</text>
+<text x="1348" y="1335.5" font-size="9.5" fill="#64748B">reports median and p95 ms per hop, and RTF, across 1</text>
+<text x="1348" y="1346.8" font-size="9.5" fill="#64748B">/ 2 / 4 threads</text>
+<g transform="translate(1320.0,1353.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
+<text x="1348" y="1364.1" font-size="10.3" font-weight="600" fill="#0F172A">Pass criterion</text>
+<text x="1348" y="1376.6" font-size="9.5" fill="#64748B">RTF below 0.5</text>
+<g transform="translate(1320.0,1382.9) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8 3v6.2c0 5-3.4 8.9-8 10.8-4.6-1.9-8-5.8-8-10.8V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-4.7"/></g>
+<text x="1348" y="1393.9" font-size="10.3" font-weight="600" fill="#0F172A">Leaves system config alone</text>
+<text x="1348" y="1406.4" font-size="9.5" fill="#64748B">the script deliberately does not touch</text>
+<text x="1348" y="1417.7" font-size="9.5" fill="#64748B">/boot/firmware/config.txt or audio config: those</text>
+<text x="1348" y="1429.0" font-size="9.5" fill="#64748B">need a reboot and can leave a board unbootable</text>
+<rect x="56" y="1247.0" width="1640" height="307" rx="12" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="2 4"/>
+<rect x="72" y="1234.0" width="223" height="26" rx="13" fill="#FFFFFF"/>
+<circle cx="87" cy="1247.0" r="9.5" fill="#475569"/>
+<text x="87" y="1250.7" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">3</text>
+<text x="103" y="1251.0" font-size="12.5" font-weight="700" fill="#475569" letter-spacing="0.5">EDGE DEPLOYMENT PLATFORM</text>
+<text x="1678" y="1540" text-anchor="end" font-size="10.2" fill="#64748B">The Band 2 runtime executes entirely on this device. No cloud and no network dependency at inference time.</text>
+<path d="M 1533 378 V 672 H 1714 V 1241" fill="none" stroke="#059669" stroke-width="1.6" marker-end="url(#g)"/>
+<text x="1708" y="692" text-anchor="end" font-size="10.2" font-weight="600" fill="#059669">deploy model to device</text>
+<path d="M 122 1265 V 1229 H 28 V 886 H 71" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="38" y="1219" font-size="10.2" font-weight="600" fill="#475569">hosts the Band 2 runtime</text>
+<text x="56" y="1586" font-size="9.8" fill="#64748B">Every figure quoted here is measured on this build. Grey dashed elements are declared future work and are not part of the current system.</text>
+</svg>

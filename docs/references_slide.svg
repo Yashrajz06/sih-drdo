@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 692" width="2100" height="692" font-family="Inter, Segoe UI, Helvetica Neue, Arial, sans-serif">
+<defs>
+<linearGradient id="gblue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFF5FF"/><stop offset="1" stop-color="#DCE9FC"/></linearGradient>
+<linearGradient id="gamber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFBEF"/><stop offset="1" stop-color="#FDF0CF"/></linearGradient>
+<linearGradient id="ggreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4FCEE"/><stop offset="1" stop-color="#E2F6D5"/></linearGradient>
+</defs>
+<rect width="2100" height="692" fill="#FFFFFF"/>
+<rect x="16" y="0" width="667" height="692" rx="18" fill="url(#gblue)" stroke="#7EA6E8" stroke-width="2"/>
+<rect x="38" y="10" width="623" height="46" rx="14" fill="#BFDBFE" stroke="#7EA6E8" stroke-width="1.8"/>
+<text x="349" y="41" text-anchor="middle" font-size="25" font-weight="700" fill="#1E3A8A">Model and Method</text>
+<circle cx="54.0" cy="92" r="5" fill="#1E3A8A"/>
+<text x="70.0" y="100" font-size="24" font-weight="700" fill="#0F172A">GTCRN</text>
+<text x="70.0" y="126" font-size="19" fill="#475569">Rong et al., ICASSP 2024</text>
+<text x="70.0" y="149" font-size="18" fill="#8A97A8">github.com/Xiaobin-Rong/gtcrn · MIT · the model we fine-tune</text>
+<circle cx="54.0" cy="179" r="5" fill="#1E3A8A"/>
+<text x="70.0" y="187" font-size="24" font-weight="700" fill="#0F172A">Complex Ratio Masking</text>
+<text x="70.0" y="213" font-size="19" fill="#475569">Williamson, Wang &amp; Wang, IEEE/ACM TASLP 24(3), 2016</text>
+<text x="70.0" y="236" font-size="18" fill="#8A97A8">the complex mask our model outputs</text>
+<circle cx="54.0" cy="266" r="5" fill="#1E3A8A"/>
+<text x="70.0" y="274" font-size="24" font-weight="700" fill="#0F172A">ERB auditory filters</text>
+<text x="70.0" y="300" font-size="19" fill="#475569">Glasberg &amp; Moore, Hearing Research 47, 1990</text>
+<text x="70.0" y="323" font-size="18" fill="#8A97A8">the perceptual sub-band front end</text>
+<line x1="48.0" y1="355" x2="651" y2="355" stroke="#7EA6E8" stroke-width="1.5"/>
+<text x="48.0" y="381" font-size="18" font-weight="700" fill="#1E3A8A" letter-spacing="0.6">LOSS FUNCTIONS IMPLEMENTED FROM</text>
+<circle cx="54.0" cy="401" r="5" fill="#1E3A8A"/>
+<text x="70.0" y="409" font-size="24" font-weight="700" fill="#0F172A">Braun &amp; Tashev, TSP 2021</text>
+<text x="70.0" y="435" font-size="19" fill="#475569">compressed magnitude, asymmetric anti-over-suppression</text>
+<circle cx="54.0" cy="466" r="5" fill="#1E3A8A"/>
+<text x="70.0" y="474" font-size="24" font-weight="700" fill="#0F172A">Yamamoto, Song &amp; Kim, ICASSP 2020</text>
+<text x="70.0" y="500" font-size="19" fill="#475569">multi-resolution STFT loss</text>
+<line x1="48.0" y1="533" x2="651" y2="533" stroke="#7EA6E8" stroke-width="1.5"/>
+<text x="48.0" y="559" font-size="18" font-weight="700" fill="#1E3A8A" letter-spacing="0.6">SURVEYED FOR CONTEXT -- NOT IMPLEMENTED</text>
+<text x="48.0" y="587" font-size="18" fill="#475569">Wang &amp; Chen, IEEE/ACM TASLP 2018 (overview) · DCCRN, Interspeech</text>
+<text x="48.0" y="612" font-size="18" fill="#475569">2020 · FullSubNet, ICASSP 2021 · DPRNN, ICASSP 2020 · DNS</text>
+<text x="48.0" y="637" font-size="18" fill="#475569">Challenge</text>
+<rect x="717" y="0" width="667" height="692" rx="18" fill="url(#gamber)" stroke="#E0A93A" stroke-width="2"/>
+<rect x="739" y="10" width="623" height="46" rx="14" fill="#FBD87F" stroke="#E0A93A" stroke-width="1.8"/>
+<text x="1050" y="41" text-anchor="middle" font-size="25" font-weight="700" fill="#7C4A03">Datasets</text>
+<circle cx="754.6666666666666" cy="92" r="5" fill="#7C4A03"/>
+<text x="770.6666666666666" y="100" font-size="24" font-weight="700" fill="#0F172A">Military Audio Dataset</text>
+<text x="770.6666666666666" y="126" font-size="19" fill="#475569">Kim, Yoon &amp; Jung, Scientific Data 11:668, 2024</text>
+<text x="770.6666666666666" y="149" font-size="18" fill="#8A97A8">CC BY 4.0 · primary defence noise · 5,655 train / 830 test</text>
+<circle cx="754.6666666666666" cy="179" r="5" fill="#7C4A03"/>
+<text x="770.6666666666666" y="187" font-size="24" font-weight="700" fill="#0F172A">LibriSpeech</text>
+<text x="770.6666666666666" y="213" font-size="19" fill="#475569">Panayotov et al., ICASSP 2015</text>
+<text x="770.6666666666666" y="236" font-size="18" fill="#8A97A8">openslr.org/12 · clean speech for training</text>
+<circle cx="754.6666666666666" cy="266" r="5" fill="#7C4A03"/>
+<text x="770.6666666666666" y="274" font-size="24" font-weight="700" fill="#0F172A">VCTK-DEMAND</text>
+<text x="770.6666666666666" y="300" font-size="19" fill="#475569">Valentini-Botinhao et al., Interspeech 2016</text>
+<text x="770.6666666666666" y="323" font-size="18" fill="#8A97A8">held-out evaluation only · never trained on</text>
+<circle cx="754.6666666666666" cy="353" r="5" fill="#7C4A03"/>
+<text x="770.6666666666666" y="361" font-size="24" font-weight="700" fill="#0F172A">DEMAND noise database</text>
+<text x="770.6666666666666" y="387" font-size="19" fill="#475569">Thiemann, Ito &amp; Vincent, Proc. Meetings on Acoustics, 2013</text>
+<text x="770.6666666666666" y="410" font-size="18" fill="#8A97A8">the noise half of VCTK-DEMAND</text>
+<circle cx="754.6666666666666" cy="440" r="5" fill="#7C4A03"/>
+<text x="770.6666666666666" y="448" font-size="24" font-weight="700" fill="#0F172A">ESC-50</text>
+<text x="770.6666666666666" y="474" font-size="19" fill="#475569">Piczak, ACM Multimedia 2015</text>
+<text x="770.6666666666666" y="497" font-size="18" fill="#8A97A8">CC BY-NC · siren and wind · evaluation only</text>
+<line x1="748.6666666666666" y1="529" x2="1351" y2="529" stroke="#E0A93A" stroke-width="1.5"/>
+<text x="748.6666666666666" y="555" font-size="18" font-weight="700" fill="#7C4A03" letter-spacing="0.6">LICENSING</text>
+<text x="748.6666666666666" y="583" font-size="18" fill="#475569">Every dataset licence verified. ESC-50 is CC BY-NC, so it is</text>
+<text x="748.6666666666666" y="608" font-size="18" fill="#475569">used for evaluation only and excluded from every</text>
+<text x="748.6666666666666" y="633" font-size="18" fill="#475569">deployment-facing claim.</text>
+<rect x="1417" y="0" width="667" height="692" rx="18" fill="url(#ggreen)" stroke="#8FCB6B" stroke-width="2"/>
+<rect x="1439" y="10" width="623" height="46" rx="14" fill="#C7EFA6" stroke="#8FCB6B" stroke-width="1.8"/>
+<text x="1751" y="41" text-anchor="middle" font-size="25" font-weight="700" fill="#14532D">Metrics, Standards and Baseline</text>
+<circle cx="1455.3333333333333" cy="92" r="5" fill="#14532D"/>
+<text x="1471.3333333333333" y="100" font-size="24" font-weight="700" fill="#0F172A">PESQ</text>
+<text x="1471.3333333333333" y="126" font-size="19" fill="#475569">ITU-T P.862 / P.862.2 · Rix et al., ICASSP 2001</text>
+<text x="1471.3333333333333" y="149" font-size="18" fill="#8A97A8">perceptual quality · target &gt; 2.5</text>
+<circle cx="1455.3333333333333" cy="179" r="5" fill="#14532D"/>
+<text x="1471.3333333333333" y="187" font-size="24" font-weight="700" fill="#0F172A">STOI</text>
+<text x="1471.3333333333333" y="213" font-size="19" fill="#475569">Taal, Hendriks, Heusdens &amp; Jensen, IEEE TASLP 19(7), 2011</text>
+<text x="1471.3333333333333" y="236" font-size="18" fill="#8A97A8">intelligibility · target &gt; 0.85</text>
+<circle cx="1455.3333333333333" cy="266" r="5" fill="#14532D"/>
+<text x="1471.3333333333333" y="274" font-size="24" font-weight="700" fill="#0F172A">SI-SNR</text>
+<text x="1471.3333333333333" y="300" font-size="19" fill="#475569">Le Roux, Wisdom, Erdogan &amp; Hershey, ICASSP 2019</text>
+<text x="1471.3333333333333" y="323" font-size="18" fill="#8A97A8">arXiv:1811.02508 · target &gt; 15 dB</text>
+<circle cx="1455.3333333333333" cy="353" r="5" fill="#14532D"/>
+<text x="1471.3333333333333" y="361" font-size="24" font-weight="700" fill="#0F172A">ITU-T G.114</text>
+<text x="1471.3333333333333" y="387" font-size="19" fill="#475569">One-way transmission time</text>
+<text x="1471.3333333333333" y="410" font-size="18" fill="#8A97A8">the 150 ms budget our 83.6 ms is measured against</text>
+<circle cx="1455.3333333333333" cy="440" r="5" fill="#14532D"/>
+<text x="1471.3333333333333" y="448" font-size="24" font-weight="700" fill="#0F172A">Spectral subtraction</text>
+<text x="1471.3333333333333" y="474" font-size="19" fill="#475569">Boll, IEEE TASSP 27(2), 1979</text>
+<text x="1471.3333333333333" y="497" font-size="18" fill="#8A97A8">our classical baseline · +0.57 on engines, +0.07 on gunfire</text>
+<line x1="1449.3333333333333" y1="529" x2="2052" y2="529" stroke="#8FCB6B" stroke-width="1.5"/>
+<text x="1449.3333333333333" y="555" font-size="18" font-weight="700" fill="#14532D" letter-spacing="0.6">TOOLCHAIN</text>
+<text x="1449.3333333333333" y="583" font-size="18" fill="#475569">PyTorch 2.13 · ONNX 1.22 / ONNX Runtime 1.29 (opset 11) ·</text>
+<text x="1449.3333333333333" y="608" font-size="18" fill="#475569">onnx-simplifier 0.7.3 · silero-vad 6.2.1 · pesq 0.0.4 / pystoi</text>
+<text x="1449.3333333333333" y="633" font-size="18" fill="#475569">0.4.1 · Raspberry Pi 5</text>
+</svg>

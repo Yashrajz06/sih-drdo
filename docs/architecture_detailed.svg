@@ -54,7 +54,7 @@
 
   <!-- C · inference -->
   <rect x="614" y="118" width="726" height="330" rx="9" fill="none" stroke="#EA8C2B" stroke-width="1.4" stroke-dasharray="7 4"/>
-  <text x="624" y="136" font-size="11" font-weight="700" fill="#EA8C2B">INFERENCE — ONNX Runtime 1.29 · CPUExecutionProvider · opset 11 · INT8</text>
+  <text x="624" y="136" font-size="11" font-weight="700" fill="#EA8C2B">INFERENCE — ONNX Runtime 1.29 · CPUExecutionProvider · opset 11 · FP32</text>
 
   <rect x="634" y="150" width="686" height="128" rx="9" fill="#F0FDFA" stroke="#0D9488" stroke-width="2"/>
   <text x="648" y="170" font-size="12" font-weight="700" fill="#134E4A">GTCRN — 48,245 params · 33 MMACs/s · causal</text>
@@ -85,7 +85,7 @@
   </g>
   <path d="M1306 262 C 1330 262, 1330 290, 664 290 C 640 290, 640 268, 646 264" fill="none" stroke="#0D9488" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#at)"/>
 
-  <text x="634" y="322" font-size="10.5" fill="#475569">Model file: gtcrn_defence.onnx — 48K params, ~1 MB, dynamic INT8 quantised, opset 11 (legacy exporter)</text>
+  <text x="634" y="322" font-size="10.5" fill="#475569">Model file: gtcrn_defence.onnx — 48,245 params, 562 KB, FP32, opset 11 (legacy exporter)</text>
   <text x="634" y="340" font-size="10.5" fill="#475569">Measured on laptop CPU: 1.53 ms per 16 ms hop = RTF 0.095 · 93% headroom</text>
   <text x="634" y="358" font-size="10.5" fill="#475569">Streaming reformulation: StreamConv2d / StreamConvTranspose2d with causal caches (no full-buffer reprocessing)</text>
   <line x1="570" y1="182" x2="628" y2="182" stroke="#334155" stroke-width="1.6" marker-end="url(#a)"/>
@@ -182,7 +182,7 @@
     <text x="604" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">graph simplification</text>
     <rect x="718" y="766" width="188" height="34" rx="7" fill="#FFFBEB" stroke="#FBBF24"/>
     <text x="812" y="781" text-anchor="middle" font-weight="600">quantize_dynamic</text>
-    <text x="812" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">INT8 weights</text>
+    <text x="812" y="794" text-anchor="middle" font-size="9.5" fill="#78350F">FP32 weights</text>
     <rect x="926" y="766" width="192" height="34" rx="7" fill="#ECFDF5" stroke="#10B981" stroke-width="1.6"/>
     <text x="1022" y="781" text-anchor="middle" font-weight="700" fill="#064E3B">gtcrn_defence.onnx</text>
     <text x="1022" y="794" text-anchor="middle" font-size="9.5" fill="#047857">~1 MB · verified 7e-07</text>

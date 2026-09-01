@@ -22,7 +22,6 @@ from pathlib import Path
 
 import numpy as np
 import soundfile as sf
-import torch
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
@@ -63,6 +62,8 @@ def causal_reference(mix: np.ndarray, checkpoint: str = "model_trained_on_dns3.t
     from gtcrn import GTCRN
 
     model = GTCRN().eval()
+    import torch          # only the batch reference needs it; the Pi has no torch
+
     ckpt = torch.load(GTCRN_DIR / "checkpoints" / checkpoint, map_location="cpu")
     model.load_state_dict(ckpt["model"])
 
@@ -100,6 +101,38 @@ def run_streaming(mix: np.ndarray, enabled: bool = True, onnx_path=None) -> tupl
     elapsed = time.perf_counter() - t0
     audio_duration = n_hops * HOP / SAMPLE_RATE
     return out, elapsed / audio_duration
+
+
+def cmd_process(args) -> None:
+    """Enhance a wav file and write the result. No audio hardware involved.
+
+    This is how you verify a board that has no sound card attached yet: copy a
+    noisy file across, process it on the target, copy the result back, and listen
+    on a machine that does have speakers. It proves the model produces correct
+    audio on that CPU, which is separate from proving the audio stack works.
+    """
+    src = Path(args.process)
+    if not src.exists():
+        sys.exit(f"no such file: {src}")
+    mix, fs = sf.read(src, dtype="float32")
+    if mix.ndim > 1:
+        mix = mix[:, 0]
+    if fs != SAMPLE_RATE:
+        from scipy import signal as _sps
+        mix = _sps.resample(mix, int(len(mix) * SAMPLE_RATE / fs)).astype(np.float32)
+        print(f"resampled {fs} -> {SAMPLE_RATE} Hz")
+
+    custom = getattr(args, "onnx", None)
+    print(f"input:  {src} ({len(mix)/SAMPLE_RATE:.2f}s)")
+    print(f"model:  {custom if custom else 'upstream gtcrn_simple.onnx'}")
+    out, rtf = run_streaming(mix, enabled=True, onnx_path=custom)
+    sf.write(args.out, out, SAMPLE_RATE)
+
+    print(f"output: {args.out}")
+    print(f"RTF on this CPU: {rtf:.4f}  "
+          f"({'real-time capable' if rtf < 1 else 'NOT real-time'})")
+    print("\nCopy it back and listen:")
+    print(f"  scp <user>@<host>:{Path(args.out).resolve()} .")
 
 
 def cmd_check(args) -> None:
@@ -285,13 +318,12 @@ def _measure_compute_per_hop(n_hops: int = 200, onnx_path=None) -> float:
 
 
 def _load_noise_loop(path: str) -> np.ndarray:
-    import torchaudio
-
     noise, fs = sf.read(path, dtype="float32")
     if noise.ndim > 1:
         noise = noise.mean(axis=1)
     if fs != SAMPLE_RATE:
-        noise = torchaudio.functional.resample(torch.from_numpy(noise), fs, SAMPLE_RATE).numpy()
+        from scipy import signal as _sps      # scipy ships on the Pi, torchaudio does not
+        noise = _sps.resample(noise, int(len(noise) * SAMPLE_RATE / fs))
     return noise.astype(np.float32)
 
 
@@ -439,6 +471,7 @@ def main():
         "Point this at a model produced by scripts/export_onnx.py to demo a fine-tuned model.",
     )
     parser.add_argument("--capture-test", type=float, metavar="SECONDS", help="mic -> file for SECONDS, no playback")
+    parser.add_argument("--process", metavar="FILE", help="enhance a wav file and exit; needs no audio hardware")
     parser.add_argument("--out", default="capture_test.wav", help="output wav for --capture-test")
     parser.add_argument("--inject-noise", metavar="FILE", help="loop this wav additively into the mic signal (live mode)")
     parser.add_argument("--synthetic-noise", action="store_true", help="inject synthetic pink noise (live mode)")
@@ -447,6 +480,8 @@ def main():
 
     if args.check:
         cmd_check(args)
+    elif args.process:
+        cmd_process(args)
     elif args.measure_latency:
         cmd_measure_latency(args)
     elif args.capture_test:
