@@ -430,14 +430,14 @@
 <text x="120" y="1476.1" font-size="10.3" font-weight="600" fill="#0F172A">5. scripts/live_demo.py</text>
 <text x="120" y="1488.6" font-size="9.5" fill="#64748B">mic to headset, with a live enhancement</text>
 <text x="120" y="1499.9" font-size="9.5" fill="#64748B">on/off toggle</text>
-<rect x="358" y="1279.0" width="660" height="213" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+<rect x="358" y="1279.0" width="660" height="224" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
 <rect x="358" y="1279.0" width="660" height="4" rx="2" fill="#2563EB"/>
 <g transform="translate(372.0,1291.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2L4 14h6l-1.2 8L20 10h-6.4z"/></g>
 <text x="399" y="1304.0" font-size="12.4" font-weight="700" fill="#0F172A">Why the processing runs on the edge</text>
 <g transform="translate(372.0,1312.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2L4 14h6l-1.2 8L20 10h-6.4z"/></g>
 <text x="400" y="1323.0" font-size="10.3" font-weight="600" fill="#0F172A">Latency</text>
-<text x="400" y="1335.5" font-size="9.5" fill="#64748B">83.6 ms measured end-to-end with a chirp and cross-correlation, not estimated. ITU-T G.114 treats anything under 150</text>
-<text x="400" y="1346.8" font-size="9.5" fill="#64748B">ms as transparent to a talker.</text>
+<text x="400" y="1335.5" font-size="9.5" fill="#64748B">83.6 ms measured end-to-end with a chirp and cross-correlation on the development machine. ITU-T G.114 treats anything</text>
+<text x="400" y="1346.8" font-size="9.5" fill="#64748B">under 150 ms as transparent to a talker.</text>
 <g transform="translate(372.0,1353.1) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h9.5a4 4 0 0 0 .8-7.9A6 6 0 0 0 7.6 7.6"/><path d="M6.5 10A4 4 0 0 0 7 18"/><path d="M3 3l18 18"/></g>
 <text x="400" y="1364.1" font-size="10.3" font-weight="600" fill="#0F172A">Connectivity independence</text>
 <text x="400" y="1376.6" font-size="9.5" fill="#64748B">a field radio cannot assume a network link, and a cloud round trip would exhaust the latency budget on its own.</text>
@@ -445,29 +445,32 @@
 <text x="400" y="1393.9" font-size="10.3" font-weight="600" fill="#0F172A">Privacy and security</text>
 <text x="400" y="1406.4" font-size="9.5" fill="#64748B">operational audio never leaves the device.</text>
 <g transform="translate(372.0,1412.7) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l3.8 2.2"/></g>
-<text x="400" y="1423.7" font-size="10.3" font-weight="600" fill="#0F172A">Real-time factor 0.095</text>
-<text x="400" y="1436.2" font-size="9.5" fill="#64748B">the model uses under a tenth of the time budget it is given, which leaves headroom for a slower board.</text>
-<g transform="translate(372.0,1442.5) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 4.8v9.4l-9 4.8-9-4.8V7.3z"/><path d="M3 7.3l9 4.8 9-4.8"/><path d="M12 12.1v9.4"/></g>
-<text x="400" y="1453.5" font-size="10.3" font-weight="600" fill="#0F172A">Footprint</text>
-<text x="400" y="1466.0" font-size="9.5" fill="#64748B">48,245 parameters, 562 KB. Small enough that ONNX Runtime threading buys nothing: 0.72 / 0.75 / 0.78 ms for 1 / 2 / 4</text>
-<text x="400" y="1477.3" font-size="9.5" fill="#64748B">threads.</text>
-<rect x="1036" y="1279.0" width="250" height="179" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+<text x="400" y="1423.7" font-size="10.3" font-weight="600" fill="#0F172A">Real-time factor 0.099</text>
+<text x="400" y="1436.2" font-size="9.5" fill="#64748B">measured on the Raspberry Pi 5 itself, not extrapolated: 1.59 ms of model time per 16 ms of audio, p95 1.62 ms. Ten</text>
+<text x="400" y="1447.5" font-size="9.5" fill="#64748B">times the headroom the budget requires.</text>
+<g transform="translate(372.0,1453.8) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 4.8v9.4l-9 4.8-9-4.8V7.3z"/><path d="M3 7.3l9 4.8 9-4.8"/><path d="M12 12.1v9.4"/></g>
+<text x="400" y="1464.8" font-size="10.3" font-weight="600" fill="#0F172A">Footprint</text>
+<text x="400" y="1477.3" font-size="9.5" fill="#64748B">48,245 parameters, 562 KB. Small enough that ONNX Runtime threading makes it slower, not faster: 1.59 / 1.65 / 1.69 ms</text>
+<text x="400" y="1488.6" font-size="9.5" fill="#64748B">per hop on 1 / 2 / 4 threads.</text>
+<rect x="1036" y="1279.0" width="250" height="194" rx="9" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
 <rect x="1036" y="1279.0" width="250" height="4" rx="2" fill="#059669"/>
 <g transform="translate(1050.0,1291.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.6" cy="14.4" r="3.3"/><circle cx="15.4" cy="14.4" r="3.3"/><circle cx="12" cy="18.6" r="3.3"/><path d="M12 10.4C10.6 7.2 8 6.4 6.2 7.6"/><path d="M12 10.4c1.4-3.2 4-4 5.8-2.8"/></g>
 <text x="1077" y="1304.0" font-size="12.4" font-weight="700" fill="#0F172A">Edge Hardware Target</text>
 <g transform="translate(1050.0,1312.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.6" cy="14.4" r="3.3"/><circle cx="15.4" cy="14.4" r="3.3"/><circle cx="12" cy="18.6" r="3.3"/><path d="M12 10.4C10.6 7.2 8 6.4 6.2 7.6"/><path d="M12 10.4c1.4-3.2 4-4 5.8-2.8"/></g>
 <text x="1078" y="1323.0" font-size="10.3" font-weight="600" fill="#0F172A">Raspberry Pi 5, 8 GB</text>
-<g transform="translate(1050.0,1338.0) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
-<text x="1078" y="1349.0" font-size="10.3" font-weight="600" fill="#0F172A">Broadcom BCM2712</text>
-<text x="1078" y="1361.5" font-size="9.5" fill="#64748B">quad-core ARM Cortex-A76 at 2.4 GHz,</text>
-<text x="1078" y="1372.8" font-size="9.5" fill="#64748B">CPU inference only</text>
-<g transform="translate(1050.0,1379.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#059669" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#059669" stroke="none"/></g>
-<text x="1078" y="1390.1" font-size="10.3" font-weight="600" fill="#0F172A">ONNX Runtime</text>
-<text x="1078" y="1402.6" font-size="9.5" fill="#64748B">CPUExecutionProvider, no accelerator</text>
-<text x="1078" y="1413.9" font-size="9.5" fill="#64748B">required</text>
-<g transform="translate(1050.0,1420.2) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V3"/><path d="M12 3l-2.4 3.6h4.8z" fill="#059669"/><path d="M12 13.5l4-3.6"/><circle cx="16.6" cy="9.2" r="1.7" fill="#059669"/><path d="M12 17.2l-4-3.8"/><rect x="6.2" y="11.4" width="3.6" height="3.6" rx="0.8" fill="#059669"/></g>
-<text x="1078" y="1431.2" font-size="10.3" font-weight="600" fill="#0F172A">USB audio codec</text>
-<text x="1078" y="1443.7" font-size="9.5" fill="#64748B">the Pi 5 has no 3.5 mm jack</text>
+<text x="1078" y="1335.5" font-size="9.5" fill="#64748B">benchmarked on the board: 1.59</text>
+<text x="1078" y="1346.8" font-size="9.5" fill="#64748B">ms/hop, RTF 0.099, throttled=0x0</text>
+<g transform="translate(1050.0,1353.1) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="1078" y="1364.1" font-size="10.3" font-weight="600" fill="#0F172A">Broadcom BCM2712</text>
+<text x="1078" y="1376.6" font-size="9.5" fill="#64748B">quad-core ARM Cortex-A76 at 2.4 GHz,</text>
+<text x="1078" y="1387.9" font-size="9.5" fill="#64748B">CPU inference only</text>
+<g transform="translate(1050.0,1394.2) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><circle cx="6.6" cy="6" r="0.9" fill="#059669" stroke="none"/><circle cx="9.6" cy="6" r="0.9" fill="#059669" stroke="none"/></g>
+<text x="1078" y="1405.2" font-size="10.3" font-weight="600" fill="#0F172A">ONNX Runtime</text>
+<text x="1078" y="1417.7" font-size="9.5" fill="#64748B">CPUExecutionProvider, no accelerator</text>
+<text x="1078" y="1429.0" font-size="9.5" fill="#64748B">required</text>
+<g transform="translate(1050.0,1435.3) scale(0.7917)" fill="none" stroke="#059669" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V3"/><path d="M12 3l-2.4 3.6h4.8z" fill="#059669"/><path d="M12 13.5l4-3.6"/><circle cx="16.6" cy="9.2" r="1.7" fill="#059669"/><path d="M12 17.2l-4-3.8"/><rect x="6.2" y="11.4" width="3.6" height="3.6" rx="0.8" fill="#059669"/></g>
+<text x="1078" y="1446.3" font-size="10.3" font-weight="600" fill="#0F172A">USB audio codec</text>
+<text x="1078" y="1458.8" font-size="9.5" fill="#64748B">the Pi 5 has no 3.5 mm jack</text>
 <rect x="1306" y="1279.0" width="328" height="164" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
 <rect x="1306" y="1279.0" width="328" height="4" rx="2" fill="#2563EB"/>
 <g transform="translate(1320.0,1291.0) scale(0.7917)" fill="none" stroke="#2563EB" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.9 2.9L16 9"/></g>
