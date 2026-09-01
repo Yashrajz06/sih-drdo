@@ -37,6 +37,10 @@ class StreamingEnhancer:
         self.inter_cache = np.zeros((2, 1, 33, 16), dtype=np.float32)
         self.analysis_buf = np.zeros(N_FFT, dtype=np.float32)
         self.synthesis_buf = np.zeros(N_FFT, dtype=np.float32)
+        # Per-hop intermediates, kept for introspection (scripts/make_pipeline_animation.py
+        # renders them). These are references to arrays this method already builds, so
+        # populating them costs nothing and changes no behaviour.
+        self.last: dict = {}
 
     def process_hop(self, hop: np.ndarray, enabled: bool = True) -> np.ndarray:
         """hop: (HOP,) float32. Returns (HOP,) float32.
@@ -69,4 +73,6 @@ class StreamingEnhancer:
         self.synthesis_buf = self.synthesis_buf + frame
         out_hop = self.synthesis_buf[:HOP].copy()
         self.synthesis_buf = np.concatenate([self.synthesis_buf[HOP:], np.zeros(HOP, dtype=np.float32)])
+        self.last = {"windowed": windowed, "spec": spec, "spec_out": spec_out,
+                     "frame": frame, "out_hop": out_hop}
         return out_hop
