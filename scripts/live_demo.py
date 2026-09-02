@@ -405,6 +405,52 @@ def cmd_capture_test(args) -> None:
     print(f"\nCompare them:\n  aplay {out_raw}\n  aplay {out_enh}")
 
 
+# ---------------------------------------------------------------- live visual
+# A terminal spectrogram, not a plot window. matplotlib is not installed on the
+# Pi (setup_pi.sh keeps the runtime to five packages) and an X/VNC window would
+# stutter over the network, whereas ANSI blocks render instantly inside the same
+# SSH session the demo is already running in.
+_RAMP = [16, 17, 18, 19, 20, 25, 26, 31, 37, 43, 49, 84, 119, 154, 190, 226, 220, 214, 208, 202, 196]
+_NB = 34
+
+
+def _bands(mag: np.ndarray, nb: int = _NB) -> np.ndarray:
+    """Average |X| into log-spaced bands, so low frequencies get the detail.
+
+    Edges are clamped so every band spans at least one bin: geomspace collapses
+    to duplicate integers at the low end, which otherwise yields empty slices,
+    NaN means, and a garbage colour index.
+    """
+    n = len(mag)
+    edges = np.round(np.geomspace(1, n, nb + 1)).astype(int)
+    out = np.empty(nb, dtype=np.float64)
+    for i in range(nb):
+        lo = min(int(edges[i]), n - 1)
+        hi = min(max(int(edges[i + 1]), lo + 1), n)
+        out[i] = mag[lo:hi].mean()
+    return out
+
+
+def _row(db: np.ndarray, lo: float = -68.0, hi: float = 6.0) -> str:
+    v = np.clip(np.nan_to_num((db - lo) / (hi - lo), nan=0.0), 0.0, 1.0)
+    idx = (v * (len(_RAMP) - 1)).astype(int)
+    return "".join(f"\033[48;5;{_RAMP[i]}m " for i in idx) + "\033[0m"
+
+
+def _meter(x: np.ndarray, width: int = 10) -> str:
+    rms = float(np.sqrt(np.mean(x.astype(np.float64) ** 2) + 1e-12))
+    n = int(np.clip((20 * np.log10(rms + 1e-9) + 60) / 60, 0, 1) * width)
+    return "\u2588" * n + "\u00b7" * (width - n)
+
+
+def _visual_header() -> None:
+    w = _NB
+    print()
+    print(f"  {'MICROPHONE IN'.center(w)}   {'MODEL OUT'.center(w)}")
+    print(f"  {'0 kHz' + ' ' * (w - 11) + '8 kHz'}   {'0 kHz' + ' ' * (w - 11) + '8 kHz'}")
+    print(f"  {'-' * w}   {'-' * w}")
+
+
 def cmd_live(args) -> None:
     import sounddevice as sd
 
@@ -435,9 +481,12 @@ def cmd_live(args) -> None:
         out_hop = enhancer.process_hop(hop, enabled=state["enabled"])
         state["rtf_samples"].append((time.perf_counter() - t0) / (HOP / SAMPLE_RATE))
         outdata[:, 0] = out_hop
+        if args.visual:
+            L = enhancer.last
+            state["frame"] = (np.abs(L["spec"]), np.abs(L["spec_out"]), hop, out_hop)
 
         now = time.time()
-        if now - state["last_print"] > 2.0:
+        if not args.visual and now - state["last_print"] > 2.0:
             recent = state["rtf_samples"][-200:]
             mean_rtf = float(np.mean(recent)) if recent else 0.0
             mode = "ENHANCED" if state["enabled"] else "BYPASS "
@@ -470,8 +519,22 @@ def cmd_live(args) -> None:
     with sd.Stream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32",
                    device=dev if dev != (None, None) else None, callback=callback):
         try:
+            if args.visual:
+                _visual_header()
             while state["running"] and listener.is_alive():
-                time.sleep(0.1)
+                if args.visual and state.get("frame") is not None:
+                    mi, mo, hi_, ho = state["frame"]
+                    din = 20 * np.log10(_bands(mi) + 1e-7)
+                    dout = 20 * np.log10(_bands(mo) + 1e-7)
+                    recent = state["rtf_samples"][-120:]
+                    rtf = float(np.mean(recent)) if recent else 0.0
+                    tag = "\033[42;30m ENHANCED \033[0m" if state["enabled"] else "\033[41;37m BYPASS   \033[0m"
+                    print(f"  {_row(din)}   {_row(dout)}  {tag} "
+                          f"in {_meter(hi_)} out {_meter(ho)} rtf {rtf:.2f}")
+                    state["frame"] = None
+                    time.sleep(0.08)
+                else:
+                    time.sleep(0.05)
         except KeyboardInterrupt:
             state["running"] = False
 
@@ -491,6 +554,8 @@ def main():
         "Point this at a model produced by scripts/export_onnx.py to demo a fine-tuned model.",
     )
     parser.add_argument("--capture-test", type=float, metavar="SECONDS", help="mic -> file for SECONDS, no playback")
+    parser.add_argument("--visual", action="store_true",
+                        help="live terminal spectrogram of input vs model output")
     parser.add_argument("--list-devices", action="store_true", help="print audio devices and exit")
     parser.add_argument("--input-device", metavar="ID|NAME", help="mic to capture from")
     parser.add_argument("--output-device", metavar="ID|NAME", help="where to play the enhanced audio")
