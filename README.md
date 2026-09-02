@@ -1,10 +1,11 @@
 # AI/ML Noise Suppression for Defence Communications (SIH / DRDO)
 
-**Status: fine-tuned model meets the problem statement's targets on real defence noise.**
+**Status: targets met on real defence noise, and real-time on the target hardware.**
 At +15 dB on gunfire/shelling: **PESQ 2.49 ± 0.04** (target 2.5, at target within
-measurement error), **STOI 0.920** (target 0.85), **SI-SNR 20.2 dB** (target 15). Runs
-live mic-to-headset at **83.6 ms** measured end-to-end latency, inside ITU-T G.114's
-transparent band. Raspberry Pi deployment is the remaining step — pending hardware.
+measurement error), **STOI 0.920** (target 0.85), **SI-SNR 20.2 dB** (target 15).
+Benchmarked on a **Raspberry Pi 5**: **1.59 ms of model time per 16 ms of audio
+(RTF 0.099)** — ten times the headroom real-time requires. Runs live mic-to-headset at
+**83.6 ms** measured end-to-end latency, inside ITU-T G.114's transparent band.
 
 See [`docs/architecture.md`](docs/architecture.md) to understand the system, or
 [`docs/solution-design.md`](docs/solution-design.md) for the full build plan.
@@ -105,6 +106,28 @@ cross-correlation will report a confident-looking but meaningless number; (2) th
 PortAudio's *default* buffer size, which is larger than the 256-sample blocks the live
 demo actually runs, so 83.6 ms is a conservative upper bound on the demo's real latency.
 Hardware round trip dominates the budget — the model contributes ~1%.
+
+### On the Raspberry Pi 5 (the target board)
+
+Measured by `scripts/setup_pi.sh` on a Pi 5 Model B Rev 1.1, 8 GB, `throttled=0x0`
+(no undervoltage or thermal limiting — a throttled board silently reports worse
+numbers, so this is checked before benchmarking rather than after).
+
+| Threads | ms/hop (median) | p95 | RTF |
+|---|---|---|---|
+| **1** | **1.59** | 1.62 | **0.099** |
+| 2 | 1.65 | 1.69 | 0.103 |
+| 4 | 1.69 | 1.73 | 0.106 |
+
+Two things worth stating plainly. **The Pi is within 4% of the development laptop**
+(1.59 vs 1.53 ms/hop) — at 33 MMACs/s the graph is dominated by per-operator overhead
+rather than arithmetic, so a Cortex-A76 keeps pace with an x86 core. And **more threads
+make it slower**, exactly as on the laptop: the model is too small for the coordination
+cost to pay for itself. Single-threaded is the right configuration.
+
+RTF 0.099 also settles the quantisation question — INT8 would optimise a bottleneck
+that does not exist. It stays scoped as future work rather than being done for its
+own sake.
 
 **Live mode (run this yourself — it uses your microphone and speakers):**
 

@@ -357,14 +357,14 @@ d1 = card(IL, dy, 262, "Deployment Flow", "copy", [
     ("headset", "5. scripts/live_demo.py", "mic to headset, with a live enhancement on/off toggle"),
 ], GREEN, GREEN_BG, GREEN_ED)
 d2 = card(358, dy, 660, "Why the processing runs on the edge", "bolt", [
-    ("bolt", "Latency", "83.6 ms measured end-to-end with a chirp and cross-correlation, not estimated. ITU-T G.114 treats anything under 150 ms as transparent to a talker."),
+    ("bolt", "Latency", "83.6 ms measured end-to-end with a chirp and cross-correlation on the development machine. ITU-T G.114 treats anything under 150 ms as transparent to a talker."),
     ("cloudoff", "Connectivity independence", "a field radio cannot assume a network link, and a cloud round trip would exhaust the latency budget on its own."),
     ("shield", "Privacy and security", "operational audio never leaves the device."),
-    ("clock", "Real-time factor 0.095", "the model uses under a tenth of the time budget it is given, which leaves headroom for a slower board."),
-    ("package", "Footprint", "48,245 parameters, 562 KB. Small enough that ONNX Runtime threading buys nothing: 0.72 / 0.75 / 0.78 ms for 1 / 2 / 4 threads."),
+    ("clock", "Real-time factor 0.099", "measured on the Raspberry Pi 5 itself, not extrapolated: 1.59 ms of model time per 16 ms of audio, p95 1.62 ms. Ten times the headroom the budget requires."),
+    ("package", "Footprint", "48,245 parameters, 562 KB. Small enough that ONNX Runtime threading makes it slower, not faster: 1.59 / 1.65 / 1.69 ms per hop on 1 / 2 / 4 threads."),
 ], BLUE, BLUE_BG, BLUE_ED)
 d3 = card(1036, dy, 250, "Edge Hardware Target", "pi", [
-    ("pi", "Raspberry Pi 5, 8 GB", ""),
+    ("pi", "Raspberry Pi 5, 8 GB", "benchmarked on the board: 1.59 ms/hop, RTF 0.099, throttled=0x0"),
     ("chip", "Broadcom BCM2712", "quad-core ARM Cortex-A76 at 2.4 GHz, CPU inference only"),
     ("box", "ONNX Runtime", "CPUExecutionProvider, no accelerator required"),
     ("usb", "USB audio codec", "the Pi 5 has no 3.5 mm jack"),
