@@ -103,6 +103,20 @@ def run_streaming(mix: np.ndarray, enabled: bool = True, onnx_path=None) -> tupl
     return out, elapsed / audio_duration
 
 
+def _dev(spec):
+    """Accept a device index or a substring of its name; None means system default."""
+    if spec is None:
+        return None
+    return int(spec) if str(spec).lstrip("-").isdigit() else spec
+
+
+def cmd_list_devices(_args) -> None:
+    import sounddevice as sd
+    print(sd.query_devices())
+    print("\nPass either the index or part of the name, e.g.:")
+    print("  --input-device 3 --output-device 'Bluetooth'")
+
+
 def cmd_process(args) -> None:
     """Enhance a wav file and write the result. No audio hardware involved.
 
@@ -366,7 +380,8 @@ def cmd_capture_test(args) -> None:
         time.sleep(1)
     print("  GO -- speak now\n", flush=True)
 
-    with sd.InputStream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32", callback=cb):
+    with sd.InputStream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32",
+                        device=_dev(getattr(args, "input_device", None)), callback=cb):
         sd.sleep(int(args.capture_test * 1000))
     print("done recording.")
 
@@ -448,7 +463,12 @@ def cmd_live(args) -> None:
     listener = threading.Thread(target=key_listener, daemon=True)
     listener.start()
 
-    with sd.Stream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32", callback=callback):
+    dev = (_dev(getattr(args, "input_device", None)), _dev(getattr(args, "output_device", None)))
+    if dev != (None, None):
+        print(f"input device:  {dev[0] if dev[0] is not None else 'system default'}")
+        print(f"output device: {dev[1] if dev[1] is not None else 'system default'}")
+    with sd.Stream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32",
+                   device=dev if dev != (None, None) else None, callback=callback):
         try:
             while state["running"] and listener.is_alive():
                 time.sleep(0.1)
@@ -471,6 +491,9 @@ def main():
         "Point this at a model produced by scripts/export_onnx.py to demo a fine-tuned model.",
     )
     parser.add_argument("--capture-test", type=float, metavar="SECONDS", help="mic -> file for SECONDS, no playback")
+    parser.add_argument("--list-devices", action="store_true", help="print audio devices and exit")
+    parser.add_argument("--input-device", metavar="ID|NAME", help="mic to capture from")
+    parser.add_argument("--output-device", metavar="ID|NAME", help="where to play the enhanced audio")
     parser.add_argument("--process", metavar="FILE", help="enhance a wav file and exit; needs no audio hardware")
     parser.add_argument("--out", default="capture_test.wav", help="output wav for --capture-test")
     parser.add_argument("--inject-noise", metavar="FILE", help="loop this wav additively into the mic signal (live mode)")
@@ -478,7 +501,9 @@ def main():
     parser.add_argument("--noise-gain", type=float, default=0.3, help="linear gain for injected noise")
     args = parser.parse_args()
 
-    if args.check:
+    if args.list_devices:
+        cmd_list_devices(args)
+    elif args.check:
         cmd_check(args)
     elif args.process:
         cmd_process(args)
