@@ -467,23 +467,30 @@ def cmd_live(args) -> None:
         noise_loop = _synthetic_pink_noise()
         print(f"injecting synthetic pink noise at gain {args.noise_gain}")
 
-    def callback(indata, outdata, _frames, _time_info, status):
+    def callback(indata, outdata, frames, _time_info, status):
         if status:
             print(status, file=sys.stderr)
-        hop = indata[:, 0].copy()
-        if noise_loop is not None:
-            pos = state["noise_pos"]
-            idx = (np.arange(pos, pos + HOP)) % len(noise_loop)
-            hop = hop + args.noise_gain * noise_loop[idx]
-            state["noise_pos"] = (pos + HOP) % len(noise_loop)
+        # The device block may hold several 16 ms hops. A larger block is the fix
+        # for underruns -- the callback is woken less often and has more slack to
+        # miss its deadline -- so the model is stepped once per hop inside it
+        # rather than assuming one hop per callback.
+        for off in range(0, frames, HOP):
+            hop = indata[off : off + HOP, 0].copy()
+            if len(hop) < HOP:
+                hop = np.pad(hop, (0, HOP - len(hop)))
+            if noise_loop is not None:
+                pos = state["noise_pos"]
+                idx = (np.arange(pos, pos + HOP)) % len(noise_loop)
+                hop = hop + args.noise_gain * noise_loop[idx]
+                state["noise_pos"] = (pos + HOP) % len(noise_loop)
 
-        t0 = time.perf_counter()
-        out_hop = enhancer.process_hop(hop, enabled=state["enabled"])
-        state["rtf_samples"].append((time.perf_counter() - t0) / (HOP / SAMPLE_RATE))
-        outdata[:, 0] = out_hop
-        if args.visual:
-            L = enhancer.last
-            state["frame"] = (np.abs(L["spec"]), np.abs(L["spec_out"]), hop, out_hop)
+            t0 = time.perf_counter()
+            out_hop = enhancer.process_hop(hop, enabled=state["enabled"])
+            state["rtf_samples"].append((time.perf_counter() - t0) / (HOP / SAMPLE_RATE))
+            outdata[off : off + HOP, 0] = out_hop[: min(HOP, frames - off)]
+            if args.visual:
+                L = enhancer.last
+                state["frame"] = (np.abs(L["spec"]), np.abs(L["spec_out"]), hop, out_hop)
 
         now = time.time()
         if not args.visual and now - state["last_print"] > 2.0:
@@ -516,7 +523,11 @@ def cmd_live(args) -> None:
     if dev != (None, None):
         print(f"input device:  {dev[0] if dev[0] is not None else 'system default'}")
         print(f"output device: {dev[1] if dev[1] is not None else 'system default'}")
-    with sd.Stream(samplerate=SAMPLE_RATE, blocksize=HOP, channels=1, dtype="float32",
+    bs = max(HOP, (int(args.blocksize) // HOP) * HOP)
+    if bs != HOP:
+        print(f"block size {bs} samples ({bs / SAMPLE_RATE * 1000:.0f} ms) -- "
+              f"more slack against dropouts, {(bs - HOP) / SAMPLE_RATE * 1000:.0f} ms more latency")
+    with sd.Stream(samplerate=SAMPLE_RATE, blocksize=bs, channels=1, dtype="float32",
                    device=dev if dev != (None, None) else None, callback=callback):
         try:
             if args.visual:
@@ -554,6 +565,9 @@ def main():
         "Point this at a model produced by scripts/export_onnx.py to demo a fine-tuned model.",
     )
     parser.add_argument("--capture-test", type=float, metavar="SECONDS", help="mic -> file for SECONDS, no playback")
+    parser.add_argument("--blocksize", type=int, default=HOP,
+                        help=f"device block in samples, a multiple of {HOP}. Raise to 512 or "
+                             f"1024 if audio drops out (trades latency for stability)")
     parser.add_argument("--visual", action="store_true",
                         help="live terminal spectrogram of input vs model output")
     parser.add_argument("--list-devices", action="store_true", help="print audio devices and exit")
